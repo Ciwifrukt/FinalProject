@@ -11,8 +11,13 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    locDiv.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+    //locDiv.innerHTML = "Latitude: " + position.coords.latitude +
+    //    "<br>Longitude: " + position.coords.longitude;
+
+    let lat = position.coords.latitude
+    let lon = position.coords.longitude
+
+    window.location.href = `/Home/GetWeather?lat=${lat}`;
 }
 
 function showError(error) {

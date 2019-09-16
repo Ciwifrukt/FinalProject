@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+<<<<<<< HEAD
 using WeatherVote.Models.Services;
+=======
 using WeatherVote.Services;
+>>>>>>> d9ff67b8ad6f6397be0abaff8e33db544d3881cd
 
 namespace WeatherVote
 {
