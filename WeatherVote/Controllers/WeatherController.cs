@@ -1,19 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WeatherVote.Models;
+using WeatherVote.Models.Services;
 
 namespace WeatherVote.Controllers
 {
     public class WeatherController : Controller
     {
-        // GET: Weather
-        public ActionResult Index()
+        private readonly SMHIService _smhiService;
+        
+            public WeatherController(SMHIService SmhiService)
         {
-            var xxx = new Rootobjectsmhi();
-            return View();
+            _smhiService = SmhiService;
+        }
+
+        // GET: Weather
+        public async Task<ActionResult> Index()
+        {
+            var weather = new Weather();
+            weather = await _smhiService.GetAllWeather();
+
+            return View("index", weather);
         }
 
         // GET: Weather/Details/5

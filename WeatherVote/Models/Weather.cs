@@ -8,6 +8,13 @@ namespace WeatherVote.Models
 {
     public class Weather
     {
-        public decimal Temperatur { get; set; }
+        public DateTime DateTime { get; set; }
+        public float Temperatur { get; set; }
+        public float Precipitation { get; set; }
+        public string ImgIcon { get; set; }
+        public int Humidity { get; set; }
+        public int Wind { get; set; }
+        public string Description { get; set; }
+
     }
 }
