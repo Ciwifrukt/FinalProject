@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WeatherVote.Models;
 using WeatherVote.Services;
-using static WeatherVote.Models.YR;
 
 namespace WeatherVote.Controllers
 {
@@ -23,10 +18,15 @@ namespace WeatherVote.Controllers
         {
             return View();
         }
-        public IActionResult GetWeather(decimal lat, decimal lon)
+
+        public IActionResult OpenWeather()
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetWeather(float lat, float lon)
         {
             var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
-            _service.GetAllWeather(pos);
+           var x = await _service.GetAllWeather(pos);
             return View();
         }
     }

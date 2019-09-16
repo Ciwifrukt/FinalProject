@@ -33,6 +33,7 @@ namespace WeatherVote
             });
 
             services.AddTransient<OpenWeatherService>();
+            services.AddTransient<HttpService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
