@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,17 +14,26 @@ namespace WeatherVote.Controllers
     public class WeatherController : Controller
     {
         private readonly SMHIService _smhiService;
+        LoactionCoord loc = new LoactionCoord();
         
             public WeatherController(SMHIService SmhiService)
         {
             _smhiService = SmhiService;
         }
 
+
+        public ActionResult Index2(float lon, float lat)
+        {
+            var w = new Weather();
+            w.Loc.Longitude = lon;
+            w.Loc.Latitude = lat;
+            return View("Index", w);
+        }
         // GET: Weather
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(Weather w)
         {
             var weather = new Weather();
-            weather = await _smhiService.GetAllWeather();
+            weather = await _smhiService.GetAllWeather(w);
 
             return View("index", weather);
         }
@@ -106,38 +114,3 @@ namespace WeatherVote.Controllers
         }
     }
 }
-=======
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WeatherVote.Models;
-using WeatherVote.Services;
-using static WeatherVote.Models.YR;
-
-namespace WeatherVote.Controllers
-{
-    public class WeatherController:Controller
-    {
-        private readonly OpenWeatherService _service;
-
-        public WeatherController(OpenWeatherService service)
-        {
-            _service = service;
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-        public IActionResult GetWeather(decimal lat, decimal lon)
-        {
-            var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
-            _service.GetAllWeather(pos);
-            return View();
-        }
-    }
-}
->>>>>>> d9ff67b8ad6f6397be0abaff8e33db544d3881cd

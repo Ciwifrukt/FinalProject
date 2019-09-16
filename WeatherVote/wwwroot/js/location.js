@@ -17,7 +17,7 @@ function showPosition(position) {
     let lat = position.coords.latitude
     let lon = position.coords.longitude
 
-    window.location.href = `/Home/GetWeather?lat=${lat}`;
+    window.location.href = `/Weather/Location?lat=${lat}&lon=${lon}`;
 }
 
 function showError(error) {

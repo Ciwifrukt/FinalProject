@@ -15,6 +15,7 @@ namespace WeatherVote.Models
         public int Humidity { get; set; }
         public int Wind { get; set; }
         public string Description { get; set; }
+        public LoactionCoord Loc { get; set; }
 
     }
 }

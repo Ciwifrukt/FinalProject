@@ -8,7 +8,7 @@ namespace WeatherVote.Models
 {
     public class LoactionCoord
     {
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public float Longitude { get; set; }
+        public float Latitude { get; set; }
     }
 }

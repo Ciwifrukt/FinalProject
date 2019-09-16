@@ -11,13 +11,14 @@ namespace WeatherVote.Models.Services
     public class SMHIService
     {
 
-        public async Task<Weather> GetAllWeather()
+        public async Task<Weather> GetAllWeather(Weather w)
         {
             var smhiroot = new SMHI.Rootobjectsmhi();
-            var w = new Weather();
+            //var w = new Weather();
             var client = new HttpClient();
             var s = "";
-            var url = "https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/17.9446/lat/59.40719/data.json";
+
+            var url = $"https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/{w.Loc.Longitude}/lat/{w.Loc.Latitude}/data.json";
 
             s = await client.GetStringAsync(url);
 
