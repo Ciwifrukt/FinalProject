@@ -21,11 +21,7 @@ namespace WeatherVote.Controllers
             return View();
         }
 
-        public IActionResult GetWeather(decimal lat)
-        {
 
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

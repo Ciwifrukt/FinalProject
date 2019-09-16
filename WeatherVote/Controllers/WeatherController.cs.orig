@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System;
+<<<<<<< HEAD
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+=======
+﻿using Microsoft.AspNetCore.Mvc;
+>>>>>>> eb112ffe51c11657f4e38b994c6f00ec1536f962
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WeatherVote.Models;
+<<<<<<< HEAD
 using WeatherVote.Models.Services;
+=======
+using WeatherVote.Services;
+>>>>>>> eb112ffe51c11657f4e38b994c6f00ec1536f962
 
 namespace WeatherVote.Controllers
 {
@@ -48,10 +51,21 @@ namespace WeatherVote.Controllers
         {
             return View();
         }
+
+<<<<<<< HEAD
+        // GET: Weather/Create
+        public ActionResult Create()
+        {
+=======
+        public IActionResult OpenWeather()
+        {
+            return View();
+        }
         public async Task<IActionResult> GetWeather(float lat, float lon)
         {
             var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
            var x = await _service.GetAllWeather(pos);
+>>>>>>> eb112ffe51c11657f4e38b994c6f00ec1536f962
             return View();
         }
 
