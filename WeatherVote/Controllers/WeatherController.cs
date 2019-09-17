@@ -16,8 +16,9 @@ namespace WeatherVote.Controllers
     {
         private readonly SMHIService _smhiService;
         LoactionCoord loc = new LoactionCoord();
-        
-            public WeatherController(SMHIService SmhiService)
+        public Weather w = new Weather();
+
+        public WeatherController(SMHIService SmhiService)
         {
             _smhiService = SmhiService;
         }
@@ -25,7 +26,6 @@ namespace WeatherVote.Controllers
 
         public ActionResult Index2(float lon, float lat)
         {
-            var w = new Weather();
             w.Loc.Longitude = lon;
             w.Loc.Latitude = lat;
             return View("Index", w);
@@ -47,7 +47,7 @@ namespace WeatherVote.Controllers
         public async Task<IActionResult> GetWeather(float lat, float lon)
         {
             var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
-           var x = await _service.GetAllWeather(pos);
+            //var x = await _service.GetAllWeather(pos);
             return View();
         }
 
