@@ -9,25 +9,27 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using WeatherVote.Models;
 using WeatherVote.Models.Services;
+using WeatherVote.Services;
 
 namespace WeatherVote.Controllers
 {
     public class WeatherController : Controller
     {
         private readonly SMHIService _smhiService;
+        private readonly YrService _yrservice;
         LoactionCoord loc = new LoactionCoord();
         public Weather w = new Weather();
 
-        public WeatherController(SMHIService SmhiService)
+        public WeatherController(YrService YrService)
         {
-            _smhiService = SmhiService;
+            _yrservice = YrService;
         }
 
 
         public ActionResult Index()
         {
             
-            return View("Index", w);
+            return View("Index");
         }
         // GET: Weather
         public async Task<ActionResult> Index2(float lon, float lat, Weather w)
@@ -50,7 +52,8 @@ namespace WeatherVote.Controllers
             var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
             //var openWeatherWeather = await _service.GetAllWeather(pos);
             //var smhiWeather = await _smhiService.GetAllWeather(pos);
-            //var yrWeather = await _yrservice.GetAllWeather(pos);
+            var yrWeather = new Weather { Loc = pos };
+            yrWeather = await _yrservice.GetAllWeather(pos);
 
 
             return View("Index");
