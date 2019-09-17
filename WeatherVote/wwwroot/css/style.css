@@ -1,0 +1,86 @@
+/*
+	stylesheet for weather vote
+*/
+
+/* Bg image*/
+body {
+  background-image: url("../img/stars.jpg");
+  min-height: 100vh;
+  min-width: 100vw;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+  color: white;
+}
+
+/* Transparent bg on top of bg image*/
+.hero {
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100vw;
+  top: 0;
+  bottom: 0;
+  z-index: -5;
+}
+
+/* Transparent Navagiation bar & White text
+*/
+.navbar {
+  background-color: rgba(31, 34, 118, 0.5);
+  color: white;
+}
+
+/* Logo*/
+.navbar a {
+  color: Yellow;
+  font-size: 25px;
+}
+
+/* Big text of city name */
+#location {
+  font-size: 35px;
+}
+
+
+/* Styling the weather box  */
+.weather {
+	border:1px solid white;
+	margin-top: 10rem;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 20px;
+	color: white;
+}
+
+.weather-head {
+	height: 50%;
+}
+
+#icon-desc {
+	font-size: 5rem;
+	padding-top: 2rem;
+}
+.humidity, .wind, .visibility {
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+	font-size: 1.5rem;
+
+}
+
+#description {
+	font-size: 2rem;
+}
+
+#temperature {
+	font-size: 7rem;
+}
+
+#icon-thermometer {
+	font-size: 5rem;
+}
+
+#humidity, #wind, #visibility {
+	font-size: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
