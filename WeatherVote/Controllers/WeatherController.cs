@@ -24,15 +24,16 @@ namespace WeatherVote.Controllers
         }
 
 
-        public ActionResult Index2(float lon, float lat)
+        public ActionResult Index()
         {
-            w.Loc.Longitude = lon;
-            w.Loc.Latitude = lat;
+            
             return View("Index", w);
         }
         // GET: Weather
-        public async Task<ActionResult> Index(Weather w)
+        public async Task<ActionResult> Index2(float lon, float lat, Weather w)
         {
+            w.Loc.Longitude = lon;
+            w.Loc.Latitude = lat;
             var weather = new Weather();
             weather = await _smhiService.GetAllWeather(w);
 
@@ -47,8 +48,12 @@ namespace WeatherVote.Controllers
         public async Task<IActionResult> GetWeather(float lat, float lon)
         {
             var pos = new LoactionCoord { Latitude = lat, Longitude = lon };
-            //var x = await _service.GetAllWeather(pos);
-            return View();
+            //var openWeatherWeather = await _service.GetAllWeather(pos);
+            //var smhiWeather = await _smhiService.GetAllWeather(pos);
+            //var yrWeather = await _yrservice.GetAllWeather(pos);
+
+
+            return View("Index");
         }
 
         // POST: Weather/Create
