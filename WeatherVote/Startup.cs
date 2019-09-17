@@ -33,10 +33,10 @@ namespace WeatherVote
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddTransient<OpenWeatherService>();
             services.AddTransient<HttpService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddTransient<SMHIService>();
+            services.AddTransient<WeatherService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
