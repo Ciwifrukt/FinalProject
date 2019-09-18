@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 using WeatherVote.Models;
+<<<<<<< HEAD
 using WeatherVote.Models.Services;
 using WeatherVote.Services;
+=======
+using WeatherVote.Services;
+using WeatherVote.ViewModels;
+>>>>>>> 6b9c28961ff93d1a79a6a0d0abbd777d62cbbf01
 
 namespace WeatherVote.Controllers
 {
     public class WeatherController : Controller
     {
+<<<<<<< HEAD
         private readonly SMHIService _smhiService;
         private readonly YrService _yrservice;
         LoactionCoord loc = new LoactionCoord();
@@ -23,11 +23,20 @@ namespace WeatherVote.Controllers
         public WeatherController(YrService YrService)
         {
             _yrservice = YrService;
+=======
+       
+        private readonly WeatherService _weatherService;
+
+        public WeatherController(WeatherService weatherService)
+        {
+            _weatherService = weatherService;
+>>>>>>> 6b9c28961ff93d1a79a6a0d0abbd777d62cbbf01
         }
 
 
         public ActionResult Index()
         {
+<<<<<<< HEAD
             
             return View("Index");
         }        
@@ -48,68 +57,26 @@ namespace WeatherVote.Controllers
 
             return View("Index");
         }
-
-        // POST: Weather/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Weather/Edit/5
-        public ActionResult Edit(int id)
-        {
+=======
             return View();
         }
+        
+>>>>>>> 6b9c28961ff93d1a79a6a0d0abbd777d62cbbf01
 
-        // POST: Weather/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+
+        public async Task<IActionResult> GetWeather(float lat, float lon)
         {
-            try
-            {
-                // TODO: Add update logic here
+            var position = new LoactionCoord { Latitude = lat, Longitude = lon };
+            var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+            var smhiWeather = await _weatherService.SMHIWeather(position);
+            var yrWeather = await _weatherService.YRWeather(position);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var allWeathers = new WeatherVM { 
+                Weathers = new List<Weather> { openWeatherWeather, smhiWeather, yrWeather }
+            };
+
+            return View("Start", allWeathers);
         }
 
-        // GET: Weather/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Weather/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

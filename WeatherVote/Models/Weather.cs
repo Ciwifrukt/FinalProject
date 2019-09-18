@@ -12,8 +12,8 @@ namespace WeatherVote.Models
         public float Temperatur { get; set; }
         public float Precipitation { get; set; }
         public string ImgIcon { get; set; }
-        public int Humidity { get; set; }
-        public int Wind { get; set; }
+        public float Humidity { get; set; }
+        public float Wind { get; set; }
         public string Description { get; set; }
         public LoactionCoord Loc { get; set; }
 
