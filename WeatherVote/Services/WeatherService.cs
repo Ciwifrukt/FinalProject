@@ -86,7 +86,7 @@ namespace WeatherVote.Services
 
         private float GetSmhiValue(string v, DateTime time, SMHI.Rootobjectsmhi smhiRootObject)
         {
-            return smhiRootObject.timeSeries.First(x => x.validTime == time).parameters.First(x => x.name == "t").values.First();
+            return smhiRootObject.timeSeries.First(x => x.validTime == time).parameters.First(x => x.name == v).values.First();
         }
 
         public string GetDescSMHI(float v)
