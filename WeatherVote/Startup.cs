@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using WeatherVote.Models.Services;
 using WeatherVote.Services;
 
-namespace WeatherVote
+    namespace WeatherVote
 {
     public class Startup
     {
@@ -33,11 +28,13 @@ namespace WeatherVote
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddTransient<WeatherService>();
             services.AddTransient<HttpService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddTransient<WeatherService>();
-
+            services.AddDbContext<VotingContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
         }
 

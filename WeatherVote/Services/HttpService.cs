@@ -2,8 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace WeatherVote
-{
+namespace WeatherVote.Services { 
     public class HttpService
     {
         public async Task<string> Get(string url)

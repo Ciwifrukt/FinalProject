@@ -31,12 +31,16 @@ namespace WeatherVote.Services
             var snow = currentOWrRO.snow._3h == null ? 0 : currentOWrRO.snow._3h;
             var prec = rain == 0 ? snow == 0 ? 0 : snow : rain;
 
-            return new Models.Weather { Temperatur = temp,
+            return new Models.Weather
+            {
+                Temperatur = temp,
                 Loc = location,
                 Description = descr,
                 Humidity = hum,
-                Precipitation =(float)prec,
-                Wind = wind};
+                Precipitation = (float)prec,
+                Wind = wind,
+                Supplier = new WeatherSupplier { Name = "Open Weather" }
+            };
             
         }
 
@@ -60,7 +64,9 @@ namespace WeatherVote.Services
                 Description = descr,
                 Humidity = hum,
                 Precipitation = (float)prec,
-                Wind = wind
+                Wind = wind,
+                Supplier = new WeatherSupplier { Name = "SMHI" }
+
             };
 
            

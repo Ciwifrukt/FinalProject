@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeatherVote.Services;
 
 namespace WeatherVote.Models
 {
     public class Weather
     {
+        public WeatherSupplier Supplier { get; set; }
         public DateTime DateTime { get; set; }
         public float Temperatur { get; set; }
         public float Precipitation { get; set; }
