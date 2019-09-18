@@ -1,0 +1,13 @@
+﻿@model WeatherVM
+
+
+@foreach (var w in Model.Weathers)
+{
+    <div class="alert">
+        <h1>@w.Supplier.Name</h1>
+        <p>@w.Temperatur</p>
+        <p> @w.Description </p>
+        <p>Wind: @w.Wind </p>
+        <p>Humidity: @w.Humidity </p>
+    </div>
+}

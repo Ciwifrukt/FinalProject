@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WeatherVote.Models
+﻿namespace WeatherVote.Models
 {
     public class OpenWeatherCurrent
     {
-
-
-
-
         public class Rootobject
         {
             public Coord coord { get; set; }
@@ -32,8 +22,8 @@ namespace WeatherVote.Models
 
         public class Coord
         {
-            public int lon { get; set; }
-            public int lat { get; set; }
+            public float lon { get; set; }
+            public float lat { get; set; }
         }
 
         public class Main

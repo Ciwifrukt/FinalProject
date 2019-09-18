@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using WeatherVote.Models;
 using WeatherVote.Services;
@@ -21,31 +23,33 @@ namespace WeatherVote.Controllers
 
         public ActionResult Index()
         {  
-            return View("Index");
-        }        
+            return View();
+        }
 
-        // GET: Weather/Details/5
-        public ActionResult Details(int id)
+
+        public ActionResult Like()
         {
             return View();
         }
 
-        
 
-
-
-        public async Task<IActionResult> GetWeather(float lat, float lon)
+        public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
-            var position = new LoactionCoord { Latitude = lat, Longitude = lon };
+            var position = new LoactionCoord { Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
-            var yrWeather = await _weatherService.YRWeather(position);
+            //var yrWeather = await _weatherService.YRWeather(position);
 
             var allWeathers = new WeatherVM { 
-                Weathers = new List<Weather> { openWeatherWeather, smhiWeather, yrWeather }
+                Weathers = new List<Weather> { openWeatherWeather, smhiWeather/*, yrWeather*/ }
             };
 
-            return View("Start", allWeathers);
+            return View("WeatherAgency", allWeathers);
+        }
+
+        public IActionResult WeatherAgency()
+        {
+            return View();
         }
 
     }

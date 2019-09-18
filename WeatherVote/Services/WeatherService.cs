@@ -18,7 +18,7 @@ namespace WeatherVote.Services
         {
             var apiKey = "cfdc9335f6a03abf829ab28b3249154b";
             //var url = $"http://api.openweathermap.org/data/2.5/forecast?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}";
-            var currentWeatherurl = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}";
+            var currentWeatherurl = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
             var currentOWjsonString = await GetApiString(currentWeatherurl);
             var currentOWrRO = JsonConvert.DeserializeObject<OpenWeatherCurrent.Rootobject>(currentOWjsonString);
 
@@ -26,11 +26,13 @@ namespace WeatherVote.Services
             var descr = currentOWrRO.weather[0].description;
             var hum = currentOWrRO.main.humidity;
             var wind = currentOWrRO.wind.speed;
-
+            float? prec = 0;
+            if (currentOWrRO.rain != null)
+            {
             var rain = currentOWrRO.rain._3h == null ? 0 : currentOWrRO.rain._3h;
             var snow = currentOWrRO.snow._3h == null ? 0 : currentOWrRO.snow._3h;
-            var prec = rain == 0 ? snow == 0 ? 0 : snow : rain;
-
+            prec = rain == 0 ? snow == 0 ? 0 : snow : rain;
+            }
             return new Models.Weather
             {
                 Temperatur = temp,
@@ -50,6 +52,7 @@ namespace WeatherVote.Services
         {
             var url = $"https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/{location.Longitude}/lat/{location.Latitude}/data.json";
             var SMHIjsonString = await GetApiString(url);
+
             var smhiRootObject = JsonConvert.DeserializeObject<SMHI.Rootobjectsmhi>(SMHIjsonString);
             DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour,0,0);
            
@@ -85,8 +88,7 @@ namespace WeatherVote.Services
 
         private async Task<string> GetApiString(string url)
         {
-            var jsonString = await _http.Get(url);
-            return jsonString;
+            return await _http.Get(url);
 
         }
 

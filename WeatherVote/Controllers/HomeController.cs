@@ -1,6 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WeatherVote.Models;
+using WeatherVote.ViewModels;
 
 namespace WeatherVote.Controllers
 {
@@ -11,10 +13,6 @@ namespace WeatherVote.Controllers
             return View();
         }
 
-        public IActionResult Location()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {
@@ -29,9 +27,6 @@ namespace WeatherVote.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult WeatherAgency()
-        {
-            return View();
-        }
+
     }
 }
