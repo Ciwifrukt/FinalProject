@@ -30,17 +30,7 @@ namespace WeatherVote.Controllers
         {
             
             return View("Index");
-        }
-        // GET: Weather
-        public async Task<ActionResult> Index2(float lon, float lat, Weather w)
-        {
-            w.Loc.Longitude = lon;
-            w.Loc.Latitude = lat;
-            var weather = new Weather();
-            weather = await _smhiService.GetAllWeather(w);
-
-            return View("index", weather);
-        }
+        }        
 
         // GET: Weather/Details/5
         public ActionResult Details(int id)
