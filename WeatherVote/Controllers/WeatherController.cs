@@ -38,10 +38,10 @@ namespace WeatherVote.Controllers
             var position = new LoactionCoord { Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
-            //var yrWeather = await _weatherService.YRWeather(position);
+            var yrWeather = await _weatherService.YRWeather(position);
 
             var allWeathers = new WeatherVM { 
-                Weathers = new List<Weather> { openWeatherWeather, smhiWeather/*, yrWeather*/ }
+                Weathers = new List<Weather> { openWeatherWeather, smhiWeather, yrWeather }
             };
 
             return View("WeatherAgency", allWeathers);

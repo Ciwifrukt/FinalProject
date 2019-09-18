@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using WeatherVote.Models;
 
 namespace WeatherVote.Services
@@ -80,9 +81,51 @@ namespace WeatherVote.Services
         public async Task<Models.Weather> YRWeather(LoactionCoord location)
         {
 
-            var weather = new Weather {  };
+            XmlDocument doc = new XmlDocument();
 
-            return weather;
+            var yrroot = new Rootobject();
+
+            var url = $"https://api.met.no/weatherapi/locationforecast/1.9/?lat={location.Latitude}&lon={location.Longitude}";
+            var weatherInfo = await _http.Get(url);
+            doc.LoadXml(weatherInfo);
+
+            string data = JsonConvert.SerializeXmlNode(doc);
+            data = data.Replace("@", "");
+
+            var a = DateTime.Now;
+            DateTime b = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
+
+            yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
+            var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location;
+            var temp = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.temperature.value;
+            var humid = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.humidity.value;
+            var wind = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.windSpeed.mps;
+
+            string prec;
+
+            if (rootNow.precipitation == null)
+            {
+                prec = "0";
+            }
+            else
+            {
+                prec = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.precipitation.value;
+            }
+            temp = temp.Replace(".", ",");
+            humid = humid.Replace(".", ",");
+            wind = wind.Replace(".", ",");
+            prec = prec.Replace(".", ",");
+
+
+            return new Models.Weather {
+                Temperatur = float.Parse(temp),
+                Loc = location,
+                Description = "",
+                Humidity = float.Parse(humid),
+                Wind = float.Parse(wind),
+                Precipitation = float.Parse(prec),
+                Supplier = new WeatherSupplier { Name = "YR.no" }
+            };
 
         }
 
