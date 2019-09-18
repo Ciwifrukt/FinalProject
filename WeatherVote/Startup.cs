@@ -35,8 +35,13 @@ namespace WeatherVote
 
             services.AddTransient<HttpService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+<<<<<<< HEAD
+            services.AddTransient<SMHIService>();
+            services.AddTransient<YrService>();
+=======
             services.AddTransient<WeatherService>();
 
+>>>>>>> 6b9c28961ff93d1a79a6a0d0abbd777d62cbbf01
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

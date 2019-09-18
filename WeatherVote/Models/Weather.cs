@@ -17,5 +17,6 @@ namespace WeatherVote.Models
         public string Description { get; set; }
         public LoactionCoord Loc { get; set; }
 
+
     }
 }
