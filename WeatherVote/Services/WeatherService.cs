@@ -89,15 +89,17 @@ namespace WeatherVote.Services
             data = data.Replace("@", "");
 
             var a = DateTime.Now;
-            DateTime b = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
+            DateTime to = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
+            DateTime from = new DateTime(a.Year, a.Month, a.Day, a.Hour+1, 0, 0, 0);
 
             //to = "2019-09-19T10:00:00Z"
 
             yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
-            var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location;
-            var temp = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.temperature.value;
-            var humid = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.humidity.value;
-            var wind = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.windSpeed.mps;
+            var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location;
+            //var rootToGetIcon = yrroot.weatherdata.product.time.Where(x => x.from == to && x.to == from).location
+            var temp = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.temperature.value;
+            var humid = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.humidity.value;
+            var wind = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.windSpeed.mps;
 
             string prec;
 
@@ -107,7 +109,7 @@ namespace WeatherVote.Services
             }
             else
             {
-                prec = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == b).location.precipitation.value;
+                prec = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.precipitation.value;
             }
             temp = temp.Replace(".", ",");
             humid = humid.Replace(".", ",");
