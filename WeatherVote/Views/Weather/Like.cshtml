@@ -43,6 +43,9 @@
                                 @w.Precipitation mm
                             </div>
                         </div>
+                        <form method="post">
+                            <button type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName">Like</button>
+                        </form>
                     </div>
                 </div>
             </div>
