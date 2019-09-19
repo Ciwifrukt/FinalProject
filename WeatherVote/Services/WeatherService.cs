@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -116,20 +117,22 @@ namespace WeatherVote.Services
             {
                 prec = rootNow.precipitation.value;
             }
+
             temp = temp.Replace(".", ",");
             humid = humid.Replace(".", ",");
             wind = wind.Replace(".", ",");
             prec = prec.Replace(".", ",");
 
+            var correctComma = new CultureInfo("sv-SE");
 
             return new Models.Weather
             {
-                Temperatur = float.Parse(temp),
+                Temperatur = float.Parse(temp, correctComma.NumberFormat),
                 Loc = location,
                 Description = desc,
-                Humidity = float.Parse(humid),
-                Wind = float.Parse(wind),
-                Precipitation = float.Parse(prec),
+                Humidity = float.Parse(humid, correctComma.NumberFormat),
+                Wind = float.Parse(wind, correctComma.NumberFormat),
+                Precipitation = float.Parse(prec, correctComma.NumberFormat),
                 Supplier = new WeatherSupplier { Name = "YR.no" }
             };
         }
