@@ -73,10 +73,10 @@ namespace WeatherVote.Controllers
 
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
-            //var yrWeather = await _weatherService.YRWeather(position);
+            var yrWeather = await _weatherService.YRWeather(position);
 
             var allWeathers = new WeatherVM { 
-                Weathers = new List<Weather> { openWeatherWeather, smhiWeather/*, yrWeather*/ }
+                Weathers = new List<Weather> { openWeatherWeather, smhiWeather, yrWeather}
             };
 
             return View("Like", allWeathers);
