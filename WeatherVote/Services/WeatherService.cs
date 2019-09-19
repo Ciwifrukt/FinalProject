@@ -116,10 +116,10 @@ namespace WeatherVote.Services
             {
                 prec = rootNow.precipitation.value;
             }
-            temp = temp.Replace(".", ",");
-            humid = humid.Replace(".", ",");
-            wind = wind.Replace(".", ",");
-            prec = prec.Replace(".", ",");
+            //temp = temp.Replace(".", ",");
+            //humid = humid.Replace(".", ",");
+            //wind = wind.Replace(".", ",");
+            //prec = prec.Replace(".", ",");
 
 
             return new Models.Weather
