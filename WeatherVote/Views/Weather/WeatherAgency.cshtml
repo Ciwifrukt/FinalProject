@@ -1,14 +1,14 @@
 ﻿@model WeatherVM
     <div class="hero">
         <!-- navbar -->
-        <nav class="navbar">
+        @*<nav class="navbar">
             <a class="navbar-brand" href="#">
                 <i class="fa fa-sun-o" aria-hidden="true"></i>
                 <strong>Weather</strong>Vote
             </a>
             <span id="location" class="lead">Stockholm, Sweden</span>
             <span id="date" class="lead">12:00AM | SEP 16, 2019</span>
-        </nav>
+        </nav>*@
         <!-- weather section  -->
 
 
@@ -39,27 +39,36 @@
                                         <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
                                     </div>
                                     <div class="visibility col-4 text-center">
-                                        <i class="fa fa-eye"></i><span> Visibility</span>
+                                        <i class="wi wi-wu-rain"></i><span> Perecipitation</span>
                                     </div>
                                 </div>
                                 <!-- weather body data -->
                                 <div class="row">
                                     <div id="humidity" class="humidity-data col-4 text-center">
-                                        @w.Humidity %
+                                        @w.Humidity%
                                     </div>
                                     <div id="wind" class="wind-data col-4 text-center">
                                         @w.Wind m/s
                                     </div>
                                     <div id="visibility" class="degree-data col-4 text-center">
-                                        235
+                                        @w.Precipitation mm
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
                     </div>
-                </div>}
-            </div>
+
+                </div>
+
+
+           
+
+
+
+            }
+        </div>
     </div>
 
 

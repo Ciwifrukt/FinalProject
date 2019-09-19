@@ -13,5 +13,6 @@ namespace WeatherVote.Models
         public string Longitude { get; set; }
 
         public string Latitude { get; set; }
+        public string CityName { get; set; }
     }
 }

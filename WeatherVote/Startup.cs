@@ -29,6 +29,7 @@ using WeatherVote.Services;
             });
 
             services.AddTransient<WeatherService>();
+            services.AddTransient<LocationService>();
             services.AddTransient<HttpService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

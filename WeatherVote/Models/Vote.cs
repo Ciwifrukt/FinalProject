@@ -1,6 +1,6 @@
 ﻿namespace WeatherVote.Services
 {
-    public class Voting
+    public class Vote
     {
         public int Id { get; set; }
         public WeatherSupplier Supplier { get; set; }
