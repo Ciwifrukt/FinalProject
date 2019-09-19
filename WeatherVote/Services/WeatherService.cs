@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using WeatherVote.Models;
@@ -92,14 +93,18 @@ namespace WeatherVote.Services
             DateTime to = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
             DateTime from = new DateTime(a.Year, a.Month, a.Day, a.Hour+1, 0, 0, 0);
 
-            //to = "2019-09-19T10:00:00Z"
-
             yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
             var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location;
-            //var rootToGetIcon = yrroot.weatherdata.product.time.Where(x => x.from == to && x.to == from).location
-            var temp = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.temperature.value;
-            var humid = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.humidity.value;
-            var wind = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.windSpeed.mps;
+            var rootToGetIcon = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to && x.to == from).location.symbol;
+
+            var unformatedDesc = rootToGetIcon.id;
+            string pattern = $"([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))";
+            var desc = Regex.Replace(unformatedDesc, pattern , "$1 ");
+
+            var img = rootToGetIcon.number;
+            var temp = rootNow.temperature.value;
+            var humid = rootNow.humidity.value;
+            var wind = rootNow.windSpeed.mps;
 
             string prec;
 
@@ -109,7 +114,7 @@ namespace WeatherVote.Services
             }
             else
             {
-                prec = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location.precipitation.value;
+                prec = rootNow.precipitation.value;
             }
             temp = temp.Replace(".", ",");
             humid = humid.Replace(".", ",");
@@ -121,7 +126,7 @@ namespace WeatherVote.Services
             {
                 Temperatur = float.Parse(temp),
                 Loc = location,
-                Description = "",
+                Description = desc,
                 Humidity = float.Parse(humid),
                 Wind = float.Parse(wind),
                 Precipitation = float.Parse(prec),
