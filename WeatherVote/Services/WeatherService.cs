@@ -100,7 +100,7 @@ namespace WeatherVote.Services
             var unformatedDesc = rootToGetIcon.id;
             string pattern = $"([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))";
             var desc = Regex.Replace(unformatedDesc, pattern , "$1 ");
-
+            //kommentar
             var img = rootToGetIcon.number;
             var temp = rootNow.temperature.value;
             var humid = rootNow.humidity.value;
