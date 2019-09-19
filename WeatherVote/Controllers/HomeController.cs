@@ -14,7 +14,7 @@ namespace WeatherVote.Controllers
         }
 
 
-        public IActionResult Privacy()
+        public IActionResult AboutUs()
         {
             return View();
         }

@@ -1,17 +1,25 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+.navbar {
+    background-color: rgba(31, 34, 118, 0.5);
+    color: white;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: Yellow;
+    font-size:20px;
 }
+
+
+    /* Sticky footer styles
+-------------------------------------------------- */
+    html {
+        font-size: 14px;
+    }
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -33,6 +41,7 @@ button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
 }
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
