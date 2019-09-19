@@ -1,5 +1,4 @@
 ﻿@model WeatherVM
-
 <!-- weather section  -->
 <div class="container">
     @foreach (var w in Model.Weathers)
@@ -8,7 +7,24 @@
             <div id="" class="col-8 mx-auto weather">
                 <!-- weather header section -->
                 <div class="weather-head">
+
+
                     <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
+
+                        <div class="row">
+                            <div class="  col-md-6 text-center"> @*text-lg-right">*@
+                                <form method="post">
+                                    <button style='font-size:24px;color:yellow;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName">Like  <i class='far fa-thumbs-up'></i> </button>
+                                </form>
+                            </div>
+                            <div class="  col-md-6 text-center"> @*text-lg-left">*@
+                                <form  method="post">
+                                    <button style='font-size:24px;color:red;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName">Dislike  <i class='far fa-thumbs-down'></i> </button>
+                                </form>
+                            </div>
+                        </div>
+
+
                     <div class="row">
                         <div id="description" class="description col-6 text-center">
                             <i id="icon-desc" class="wi wi-owm-200"></i>
@@ -43,17 +59,14 @@
                                 @w.Precipitation mm
                             </div>
                         </div>
-                        <form method="post">
-                            <button type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName">Like</button>
-                        </form>
                     </div>
                 </div>
-            </div>
-        </div>
+                    </div>
+                </div>
     };
 </div>
 
-
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 
 
