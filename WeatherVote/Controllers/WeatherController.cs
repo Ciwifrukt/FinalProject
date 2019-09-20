@@ -63,7 +63,34 @@ namespace WeatherVote.Controllers
         }
 
 
-    public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
+
+        public IActionResult AddDisLikes(string wname, string loc)
+        {
+            if (!_context.WeatherSuppliers.Any(x => x.Name == wname))
+            {
+                var w = new WeatherSupplier { Name = wname };
+                _context.WeatherSuppliers.Add(w);
+                _context.Votes.Add(new Vote { DisLikes = 1, Supplier = w, Location = loc });
+            }
+            else if (!_context.Votes.Any(x => x.Supplier.Name == wname))
+            {
+                var w = _context.WeatherSuppliers.First(x => x.Name == wname);
+                _context.Votes.Add(new Vote { Supplier = w, DisLikes = 1, Location = loc });
+
+            }
+            else
+            {
+                var vote = _context.Votes.First(x => x.Supplier.Name == wname);
+                vote.DisLikes++;
+            }
+
+            _context.SaveChanges();
+            return View("Index");
+
+        }
+
+
+        public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
             var locname = await _locationService.LocationName();
 
