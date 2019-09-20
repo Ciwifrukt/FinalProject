@@ -46,6 +46,7 @@ namespace WeatherVote.Services
                 Humidity = hum,
                 Precipitation = (float)prec,
                 Wind = wind,
+                ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" }
             };
         }
@@ -63,6 +64,7 @@ namespace WeatherVote.Services
             var prec = GetSmhiValue("pmean", now, smhiRootObject);
             var wind = GetSmhiValue("ws", now, smhiRootObject);
             var descr = GetDescSMHI(GetSmhiValue("Wsymb2", now, smhiRootObject));
+            var imgIconUrl = GetSmhiValue("Wsymb2", now, smhiRootObject);
 
             return new Weather
             {
@@ -72,6 +74,7 @@ namespace WeatherVote.Services
                 Humidity = hum,
                 Precipitation = (float)prec,
                 Wind = wind,
+                ImgIcon = GetImgIcon(imgIconUrl, now),
                 Supplier = new WeatherSupplier { Name = "SMHI" }
             };
         }
@@ -230,6 +233,224 @@ namespace WeatherVote.Services
 
                 case 27:
                     return "Heavy snowfall";
+
+                default:
+                    return null;
+            }
+        }
+        public string GetImgIcon(float imgsymbol, DateTime now)
+        {
+            switch (imgsymbol)
+            {
+               
+                case 1:
+                case 2:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return "/img/weathericons/01n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return "/img/weathericons/01m.png";
+                    }
+                    else
+                    {
+                        return "/img/weathericons/01d.png";
+                    }
+
+                case 3:
+                case 4:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/02n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/02m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/02d.png";
+                    }
+
+                case 5:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/03n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/03m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/03d.png";
+                    }
+
+                case 6:
+                    return @"/img/weathericons/04.png";
+
+                case 7:
+                    return @"/img/weathericons/15.png";
+
+                case 8:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/40n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/40m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/40d.png";
+                    }
+
+                case 9:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/05n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/05m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/05d.png";
+                    }
+
+                case 10:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/41n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/41m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/41d.png";
+                    }
+
+                case 11:
+                    return "Thunderstorm";
+
+                case 12:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/42n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/42m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/42d.png";
+                    }
+
+                case 13:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/07n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/07m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/07d.png";
+                    }
+
+                case 14:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/43n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/43m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/43d.png";
+                    }
+
+                case 15:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/44n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/44m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/44d.png";
+                    }
+
+                case 16:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/08n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/08m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/08d.png";
+                    }
+
+                case 17:
+                    if (now.Hour >= 20 || now.Hour < 6)
+                    {
+                        return @"/img/weathericons/45n.png";
+                    }
+                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    {
+                        return @"/img/weathericons/45m.png";
+                    }
+                    else
+                    {
+                        return @"/img/weathericons/45d.png";
+                    }
+
+                case 18:
+                    return @"/img/weathericons/46.png";
+
+                case 19:
+                    return @"/img/weathericons/09.png";
+                           
+                case 20:    
+                    return @"/img/weathericons/10.png";
+
+                case 21:
+                    return "Thunder";
+
+                case 22:
+                    return @"/img/weathericons/47.png";
+
+                case 23:     
+                    return @"/img/weathericons/12.png";
+
+                case 24:     
+                    return @"/img/weathericons/48.png";
+
+                case 25:     
+                    return @"/img/weathericons/49.png";
+
+                case 26: 
+                    return @"/img/weathericons/13.png";
+                case 27:     
+
+                    return @"/img/weathericons/50.png";
 
                 default:
                     return null;
