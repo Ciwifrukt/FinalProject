@@ -102,6 +102,7 @@ namespace WeatherVote.Services
             var rootToGetIcon = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to && x.to == from).location.symbol;
 
             var unformatedDesc = rootToGetIcon.id;
+            var imgIconUrl = float.Parse(rootToGetIcon.number);
             string pattern = $"([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))";
             var desc = Regex.Replace(unformatedDesc, pattern , "$1 ");
 
@@ -135,6 +136,7 @@ namespace WeatherVote.Services
                 Description = desc,
                 Humidity = float.Parse(humid, correctComma.NumberFormat),
                 Wind = float.Parse(wind, correctComma.NumberFormat),
+                ImgIcon = GetImgIcon(imgIconUrl, a),
                 Precipitation = float.Parse(prec, correctComma.NumberFormat),
                 Supplier = new WeatherSupplier { Name = "YR.no" }
             };
