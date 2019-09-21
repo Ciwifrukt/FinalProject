@@ -96,8 +96,6 @@ namespace WeatherVote.Controllers
 
             var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
 
-
-
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);

@@ -251,7 +251,7 @@ namespace WeatherVote.Services
                     {
                         return "/img/weathericons/01n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return "/img/weathericons/01m.png";
                     }
