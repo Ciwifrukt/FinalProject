@@ -88,7 +88,15 @@ namespace WeatherVote.Controllers
             var sortedWeather = new List<Weather>();
             foreach (var vote in votesList)
             {
+
                 sortedWeather.Add(weatherList.First(x => x.Supplier.Name == vote.Supplier.Name));
+            }
+            foreach (var w in weatherList)
+            {
+                if (!sortedWeather.Any(x => x.Supplier.Name == w.Supplier.Name))
+                {
+                    sortedWeather.Add(w);
+                }
             }
 
 
