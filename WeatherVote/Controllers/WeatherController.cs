@@ -94,7 +94,10 @@ namespace WeatherVote.Controllers
 
 
             var allWeathers = new WeatherVM {
-                Weathers = sortedWeather
+                Weathers = sortedWeather,
+                City = position.CityName,
+                Date = DateTime.Now.Date
+                .ToString()
             };
 
             return View("Like", allWeathers);

@@ -10,5 +10,7 @@ namespace WeatherVote.ViewModels
     public class WeatherVM
     {
         public List<Weather> Weathers { get; set; }
+        public string City { get; set; }
+        public string Date { get; set; }
     }
 }
