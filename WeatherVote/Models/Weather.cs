@@ -9,6 +9,7 @@ namespace WeatherVote.Models
 {
     public class Weather
     {
+        public int Id { get; set; }
         public WeatherSupplier Supplier { get; set; }
         public DateTime DateTime { get; set; }
         public float Temperatur { get; set; }
@@ -19,6 +20,7 @@ namespace WeatherVote.Models
         public string Description { get; set; }
         public LoactionCoord Loc { get; set; }
         public int Sorting { get; set; }
+        public DateTime Updated { get; set; }
 
 
     }

@@ -99,7 +99,12 @@ namespace WeatherVote.Controllers
             allWeathers = new WeatherVM {
                 Weathers = sortedWeather,
                 City = position.CityName,
+<<<<<<< HEAD
                 Date = DateTime.Now.ToString("dddd, dd MMMM HH:mm")
+=======
+                Date = DateTime.Now.Date.ToShortDateString()
+                
+>>>>>>> 4a759dbc860cb1af7d35f1e8847190ce9e3213f1
             };
 
             return View("Like", allWeathers);
