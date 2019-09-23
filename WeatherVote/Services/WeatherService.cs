@@ -266,7 +266,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/02n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/02m.png";
                     }
@@ -280,7 +280,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/03n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/03m.png";
                     }
@@ -300,7 +300,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/40n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/40m.png";
                     }
@@ -314,7 +314,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/05n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/05m.png";
                     }
@@ -328,7 +328,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/41n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/41m.png";
                     }
@@ -345,7 +345,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/42n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/42m.png";
                     }
@@ -359,7 +359,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/07n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/07m.png";
                     }
@@ -373,7 +373,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/43n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/43m.png";
                     }
@@ -387,7 +387,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/44n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/44m.png";
                     }
@@ -401,7 +401,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/08n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/08m.png";
                     }
@@ -415,7 +415,7 @@ namespace WeatherVote.Services
                     {
                         return @"/img/weathericons/45n.png";
                     }
-                    else if (now.Hour >= 6 || now.Hour <= 8)
+                    else if (now.Hour >= 6 && now.Hour <= 8)
                     {
                         return @"/img/weathericons/45m.png";
                     }
