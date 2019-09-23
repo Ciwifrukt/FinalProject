@@ -18,6 +18,7 @@ namespace WeatherVote.Models
         public float Wind { get; set; }
         public string Description { get; set; }
         public LoactionCoord Loc { get; set; }
+        public int Sorting { get; set; }
 
 
     }

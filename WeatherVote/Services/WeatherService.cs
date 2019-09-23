@@ -27,7 +27,8 @@ namespace WeatherVote.Services
             var currentOWjsonString = await _http.Get(currentWeatherurl);
             var currentOWrRO = JsonConvert.DeserializeObject<OpenWeatherCurrent.Rootobject>(currentOWjsonString);
 
-            var temp = currentOWrRO.main.temp;
+            var temp1 = decimal.Parse(currentOWrRO.main.temp.ToString());
+            var temp = float.Parse(Decimal.Round(temp1, 1).ToString());
             var descr = currentOWrRO.weather[0].description;
             var hum = currentOWrRO.main.humidity;
             var wind = currentOWrRO.wind.speed;
