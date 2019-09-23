@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,23 +39,27 @@ namespace WeatherVote.Controllers
         }
 
 
-        public IActionResult AddLikes(string wname, string loc)
+        public IActionResult AddLikes(string wname, string loc, string typ)
         {
             if(!_context.WeatherSuppliers.Any(x => x.Name == wname)) {
                 var w = new WeatherSupplier { Name = wname };
                 _context.WeatherSuppliers.Add(w);
-                _context.Votes.Add(new Vote { Likes = 1, Supplier = w, Location= loc});
+                _context.Votes.Add(new Vote { Likes = typ == "like" ? 1 : -1, Supplier = w, Location = loc }) ;
             }
             else if(!_context.Votes.Any(x=>x.Supplier.Name == wname))
             {
                 var w = _context.WeatherSuppliers.First(x => x.Name == wname);
-                _context.Votes.Add(new Vote { Supplier = w, Likes = 1, Location = loc});
+                _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc});
 
             }
             else
             {
                 var vote = _context.Votes.First(x => x.Supplier.Name == wname);
+                if(typ=="like")
                 vote.Likes++;
+                else
+                    vote.Likes--;
+
             }
 
             _context.SaveChanges();
@@ -64,31 +69,7 @@ namespace WeatherVote.Controllers
 
 
 
-        public IActionResult AddDisLikes(string wname, string loc)
-        {
-            if (!_context.WeatherSuppliers.Any(x => x.Name == wname))
-            {
-                var w = new WeatherSupplier { Name = wname };
-                _context.WeatherSuppliers.Add(w);
-                _context.Votes.Add(new Vote { DisLikes = 1, Supplier = w, Location = loc });
-            }
-            else if (!_context.Votes.Any(x => x.Supplier.Name == wname))
-            {
-                var w = _context.WeatherSuppliers.First(x => x.Name == wname);
-                _context.Votes.Add(new Vote { Supplier = w, DisLikes = 1, Location = loc });
-
-            }
-            else
-            {
-                var vote = _context.Votes.First(x => x.Supplier.Name == wname);
-                vote.DisLikes++;
-            }
-
-            _context.SaveChanges();
-            return View("Index");
-
-        }
-
+      
 
         public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
@@ -99,9 +80,24 @@ namespace WeatherVote.Controllers
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
+            var weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
 
-            var allWeathers = new WeatherVM { 
-                Weathers = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather }
+
+            var votesList = _context.Votes.Include(x => x.Supplier).
+                ToList().OrderByDescending(x => x.Likes);
+            var sortedWeather = new List<Weather>();
+            foreach (var vote in votesList)
+            {
+                sortedWeather.Add(weatherList.First(x => x.Supplier.Name == vote.Supplier.Name));
+            }
+
+
+
+            var allWeathers = new WeatherVM {
+                Weathers = sortedWeather,
+                City = position.CityName,
+                Date = DateTime.Now.Date
+                .ToString()
             };
 
             return View("Like", allWeathers);
