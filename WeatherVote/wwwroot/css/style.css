@@ -79,7 +79,7 @@ body {
 }
 
 #temperature {
-    font-size: calc(20px + 5vw);
+    font-size: calc(20px + 3vw);
 }
 
 #icon-thermometer {
@@ -93,5 +93,5 @@ body {
 }
 
 .desc {
-    font-size: calc(10px + 5vw);
+    font-size: calc(12px + 1.5vw);
 }
