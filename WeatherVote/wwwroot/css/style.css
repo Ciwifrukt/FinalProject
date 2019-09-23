@@ -68,16 +68,18 @@ body {
 
 
 #icon-desc {
+    max-width: 100%;
+    height: auto;
     font-size: 5rem;
     padding-top: 2rem;
 }
 
 #description {
-	font-size: 2rem;
+	font-size: 2vw;
 }
 
 #temperature {
-	font-size: 6vw;
+    font-size: calc(20px + 5vw);
 }
 
 #icon-thermometer {
@@ -88,4 +90,8 @@ body {
 	font-size: 2rem;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
+}
+
+.desc {
+    font-size: calc(10px + 5vw);
 }

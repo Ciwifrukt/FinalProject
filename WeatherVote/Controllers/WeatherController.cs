@@ -94,7 +94,7 @@ namespace WeatherVote.Controllers
 
 
             var allWeathers = new WeatherVM {
-                Weathers = sortedWeather,
+                Weathers = weatherList, /*sortedWeather*/
                 City = position.CityName,
                 Date = DateTime.Now.Date
                 .ToString()
