@@ -77,11 +77,11 @@ body {
 }
 
 #temperature {
-	font-size: 7rem;
+	font-size: 6vw;
 }
 
 #icon-thermometer {
-	font-size: 5rem;
+	font-size: 4vw;
 }
 
 #humidity, #wind, #visibility {
