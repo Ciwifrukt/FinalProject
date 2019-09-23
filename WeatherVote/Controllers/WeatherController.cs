@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -79,9 +80,21 @@ namespace WeatherVote.Controllers
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
+            var weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
 
-            var allWeathers = new WeatherVM { 
-                Weathers = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather }
+
+            var votesList = _context.Votes.Include(x => x.Supplier).
+                ToList().OrderByDescending(x => x.Likes);
+            var sortedWeather = new List<Weather>();
+            foreach (var vote in votesList)
+            {
+                sortedWeather.Add(weatherList.First(x => x.Supplier.Name == vote.Supplier.Name));
+            }
+
+
+
+            var allWeathers = new WeatherVM {
+                Weathers = sortedWeather
             };
 
             return View("Like", allWeathers);
