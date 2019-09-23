@@ -73,6 +73,7 @@ namespace WeatherVote.Controllers
 
         public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
+            //Gw(lat,lon);
             var locname = await _locationService.LocationName();
 
             var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
@@ -84,22 +85,30 @@ namespace WeatherVote.Controllers
 
 
             var votesList = _context.Votes.Include(x => x.Supplier).
-                ToList().OrderByDescending(x => x.Likes);
+                ToList();
+
+            foreach (var w in weatherList)
+            {
+                if (!votesList.Any(x => x.Supplier.Name == w.Supplier.Name))
+                {
+                    _context.Add(new Vote
+                    {
+                        Supplier = new WeatherSupplier
+                        { Name = w.Supplier.Name },
+                        Likes = 0,
+                        Location = w.Loc.CityName
+                    });
+
+                }
+            }
+            _context.SaveChanges();
+       
+            votesList = _context.Votes.Include(x => x.Supplier).ToList().OrderByDescending(x => x.Likes).ToList();
             var sortedWeather = new List<Weather>();
             foreach (var vote in votesList)
             {
-
                 sortedWeather.Add(weatherList.First(x => x.Supplier.Name == vote.Supplier.Name));
             }
-            foreach (var w in weatherList)
-            {
-                if (!sortedWeather.Any(x => x.Supplier.Name == w.Supplier.Name))
-                {
-                    sortedWeather.Add(w);
-                }
-            }
-
-
 
             var allWeathers = new WeatherVM {
                 Weathers = sortedWeather,
@@ -111,7 +120,16 @@ namespace WeatherVote.Controllers
             return View("Like", allWeathers);
         }
 
+        //private void Gw(decimal lat, decimal lon)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
         public IActionResult WeatherAgency()
+        {
+            return View();
+        }
+        public IActionResult AboutUs()
         {
             return View();
         }
