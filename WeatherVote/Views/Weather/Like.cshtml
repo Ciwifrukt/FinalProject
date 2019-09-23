@@ -1,6 +1,10 @@
 ﻿@model WeatherVM
 <!-- weather section  -->
 <div class="container" style="margin-bottom:3em">
+    <div class="row">
+        <div class="col-lg-8">@Model.City</div>
+        <div class="col-lg-8">@Model.Date</div>
+    </div>
     @foreach (var w in Model.Weathers)
     {
         <div class="row">
