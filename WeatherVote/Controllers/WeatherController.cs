@@ -77,24 +77,30 @@ namespace WeatherVote.Controllers
 
         public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
-           
             var locname = await _locationService.LocationName();
-
+            var weatherList = _context.Weathers.ToList();
             var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
-
+            if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) { 
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
-            var weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
-
+            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+            }
+            else
+            {
+                weatherList= _context.Weathers.ToList();
+            }
             var sortedWeather = SortWeathers(weatherList);
-            
+            foreach (var item in sortedWeather)
+            {
+                item.Updated = DateTime.Now;
+            }
 
             allWeathers = new WeatherVM {
                 Weathers = sortedWeather,
                 City = position.CityName,
-                Date = DateTime.Now.Date
-                .ToString()
+                Date = DateTime.Now.Date.ToShortDateString()
+                
             };
 
             return View("Like", allWeathers);
