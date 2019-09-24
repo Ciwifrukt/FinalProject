@@ -108,3 +108,10 @@ body {
     /*font-size: calc(12px + 1.5vw);*/
     padding-bottom: 1rem;
 }
+
+@media screen and (max-width: 500px) {
+    .humi {
+        display:none;
+        
+    }
+}
