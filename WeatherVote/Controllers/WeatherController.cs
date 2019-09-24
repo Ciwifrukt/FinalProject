@@ -4,13 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WeatherVote.Models;
 using WeatherVote.Services;
 using WeatherVote.ViewModels;
-using Xamarin.Forms.Maps;
 
 namespace WeatherVote.Controllers
 {
