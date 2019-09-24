@@ -81,40 +81,73 @@ namespace WeatherVote.Controllers
             var weatherList = _context.Weathers.ToList();
             var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
 
-            if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) {
-
-                _context.Weathers.RemoveRange(_context.Weathers);
-
-            var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-            var smhiWeather = await _weatherService.SMHIWeather(position);
-            var yrWeather = await _weatherService.YRWeather(position);
-            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
-
-                foreach (var weather in weatherList)
-                {
-                _context.Weathers.Add(weather);
-
-                }
-                _context.SaveChanges();
-
+            if (WeatherNotUpdatedTheLastTenMinutes(weatherList, position))
+            {
+                weatherList = await GetAllWeatherFromApi(weatherList, position);
             }
             else
             {
-                weatherList= _context.Weathers.ToList();
-            }
-            var sortedWeather = SortWeathers(weatherList);
-            foreach (var item in sortedWeather)
-            {
-                item.Updated = DateTime.Now;
+                weatherList = GetWeathersFromDatabase();
             }
 
-            allWeathers = new WeatherVM {
+            var sortedWeather = SortWeathers(weatherList);
+            SetNowAsLatestUpdatedTime(sortedWeather);
+
+            CreateViewModelFromWeatherData(position, sortedWeather);
+
+            return View("Like", allWeathers);
+        }
+
+        private static void CreateViewModelFromWeatherData(LoactionCoord position, List<Weather> sortedWeather)
+        {
+            allWeathers = new WeatherVM
+            {
                 Weathers = sortedWeather,
                 City = position.CityName,
                 Date = DateTime.Now.ToString("dddd, dd MMMM HH:mm")
             };
+        }
 
-            return View("Like", allWeathers);
+        private List<Weather> GetWeathersFromDatabase()
+        {
+            return _context.Weathers.ToList();
+        }
+
+        private static bool WeatherNotUpdatedTheLastTenMinutes(List<Weather> weatherList, LoactionCoord position)
+        {
+            return weatherList.Where(x => x.Loc.CityName == position.CityName).Any(x => x.Updated <= DateTime.Now.AddMinutes(10)) || weatherList.Count == 0;
+        }
+
+        private static void SetNowAsLatestUpdatedTime(List<Weather> sortedWeather)
+        {
+            foreach (var item in sortedWeather)
+            {
+                item.Updated = DateTime.Now;
+            }
+        }
+
+        private async Task<List<Weather>> GetAllWeatherFromApi(List<Weather> weatherList, LoactionCoord position)
+        {
+            _context.Weathers.RemoveRange(_context.Weathers);
+
+            weatherList = await GetWeatherForPosition(weatherList, position);
+
+            foreach (var weather in weatherList)
+            {
+                _context.Weathers.Add(weather);
+
+            }
+            _context.SaveChanges();
+            return weatherList;
+        }
+
+        private async Task<List<Weather>> GetWeatherForPosition(List<Weather> weatherList, LoactionCoord position)
+        {
+            var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+            var smhiWeather = await _weatherService.SMHIWeather(position);
+            var yrWeather = await _weatherService.YRWeather(position);
+            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+            return weatherList;
         }
 
         private List<Weather> SortWeathers(List<Weather> weatherList)
