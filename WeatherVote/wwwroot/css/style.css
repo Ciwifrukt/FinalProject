@@ -14,7 +14,13 @@ body {
     overflow-x:hidden;
 }
 
+.weather:hover {
+    background-color: rgba(31, 34, 118, 0.5);
+}
 
+#button1, #button2:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
 
 /* Transparent bg on top of bg image*/
