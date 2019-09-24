@@ -27,37 +27,35 @@
 
                     <div class="row">
                         <div id="description" class="description col-6 text-center">
-                            @*<i id="icon-desc" class="wi wi-owm-200"></i>*@
-                            @*<img src="~/img/weathericons/04.png" />*@
                             <img src=@w.ImgIcon />
-                            <p class="desc">@w.Description</p>
+                            <p class="desc" style="white-space:nowrap; font-size:x-large;">@w.Description</p>
                         </div>
-                        <div id="temperature" class="col-6 text-center">
-                            @w.Temperatur <i id="icon-thermometer" class="wi wi-thermometer"></i>
+                        <div id="temperature" class="col-6 text-center" style="overflow:hidden;">
+                            <p id="icon-thermometer" class="wi wi-thermometer">@w.Temperatur</p>
                         </div>
                     </div>
                     <!-- weather body header -->
                     <div class="weather-body">
                         <div class="row">
                             <div class="humidity col-4 text-center">
-                                <i class="wi wi-raindrop"></i><span> Humidity</span>
+                                <i class="wi wi-raindrop fa-1x"></i>
                             </div>
                             <div class="wind col-4 text-center">
-                                <i class="wi wi-strong-wind"></i><span> Wind Speed</span>
+                                <i class="wi wi-strong-wind fa-1x"></i>
                             </div>
                             <div class="visibility col-4 text-center">
-                                <i class="wi wi-wu-rain"></i><span> Perecipitation</span>
+                                <i class="wi wi-wu-rain fa-1x"></i>
                             </div>
                         </div>
                         <!-- weather body data -->
                         <div class="row">
-                            <div id="humidity" class="humidity-data col-4 text-center">
-                                @w.Humidity%
+                            <div id="humidity" class="humidity-data col-4 text-center" style="white-space:nowrap">
+                                @w.Humidity %
                             </div>
-                            <div id="wind" class="wind-data col-4 text-center">
+                            <div id="wind" class="wind-data col-4 text-center" style="white-space:nowrap">
                                 @w.Wind m/s
                             </div>
-                            <div id="visibility" class="degree-data col-4 text-center">
+                            <div id="visibility" class="degree-data col-4 text-center" style="white-space:nowrap">
                                 @w.Precipitation mm
                             </div>
                         </div>
@@ -70,6 +68,7 @@
 
 @*Like and dislike icons*@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<script src="~/js/background.js" asp-append-version="true"></script>
 
 
 
