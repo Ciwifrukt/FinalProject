@@ -3,7 +3,11 @@
 
 
 function getLocation() {
-        navigator.geolocation.getCurrentPosition(showPosition);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        locDiv.innerHTML = "Geolocation is not supported by this browser.";
+    }
 }
 
 function showPosition(position) {

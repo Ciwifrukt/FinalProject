@@ -4,56 +4,61 @@
 
 /* Bg image*/
 body {
-  background-image: url("../img/stars.jpg");
-  min-height: 100vh;
-  min-width: 100vw;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  margin: 0 auto;
-  color: white;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+    color: white;
+    overflow-x:hidden;
 }
+
+
+
 
 /* Transparent bg on top of bg image*/
 .hero {
-  position: absolute;
-  min-height: 100vh;
-  min-width: 100vw;
-  top: 0;
-  bottom: 0;
-  z-index: -5;
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vw;
+    top: 0;
+    bottom: 0;
+    z-index: -5;
 }
 
 /* Transparent Navagiation bar & White text
 */
 .navbar {
-  background-color: rgba(31, 34, 118, 0.5);
-  color: white;
+    background-color: rgba(31, 34, 118, 0.5);
+    color: white;
 }
 
-/* Logo*/
-.navbar a {
-  color: Yellow;
-  font-size: 25px;
-}
+    /* Logo*/
+    .navbar a {
+        color: Yellow;
+        font-size: 25px;
+    }
 
 /* Big text of city name */
 #location {
-  font-size: 35px;
+    font-size: 35px;
 }
 
 
 /* Styling the weather box  */
 .weather {
-	border:1px solid white;
-	margin-top: 5rem;
-	background-color: rgba(0, 0, 0, 0.5);
-	border-radius: 20px;
-	color: white;
+    border: 1px solid white;
+    margin-top: 5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    color: white;
 }
 
+
+
 .weather-head {
-	height: 50%;
+    height: 50%;
 }
 
 
@@ -72,26 +77,41 @@ body {
     height: auto;
     font-size: 5rem;
     padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 
-#description {
+/*#description {
 	font-size: 2vw;
-}
+}*/
 
 #temperature {
-    font-size: calc(20px + 3vw);
+    /*font-size: calc(20px + 3vw);*/
+    font-size: x-large;
+    padding-bottom: 1rem;
 }
 
 #icon-thermometer {
-	font-size: 4vw;
+    max-width: 100%;
+    height: auto;
+    font-size: 5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 0.5rem;
 }
 
 #humidity, #wind, #visibility {
-	font-size: 2rem;
-	padding-top: 1rem;
-	padding-bottom: 1rem;
+    font-size: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .desc {
-    font-size: calc(12px + 1.5vw);
+    /*font-size: calc(12px + 1.5vw);*/
+    padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 500px) {
+    .humi {
+        display:none;
+        
+    }
 }
