@@ -1,99 +1,83 @@
 ﻿@model WeatherVM
-<!-- weather section  -->
-    <div class="container" style="margin-bottom:3em">
+<!-- time, date and location  -->
+<div class="container" style="margin-bottom:3em">
 
         <div class="weather text-center" style="padding-bottom:1em; margin-top:1em; font-size:25px;">
 
-                <a>@Model.City<br/></a>
-                <a>@Model.Date</a>
-
+            <a>@Model.City<br /></a>
+            <a>@Model.Date</a>
         </div>
 
 
 
-        @foreach (var w in Model.Weathers)
-        {
-            <div class="row">
-                <div id="weatherCard" class="col-lg-8 mx-auto weather">
-                    <!-- weather header section -->
-                    <div class="weather-head">
+    <!-- weather section  -->
+    @foreach (var w in Model.Weathers)
+    {
+        <div class="row">
+            <div  class="col-lg-8 mx-auto weather">
+                <!-- weather header section -->
+                <div class="weather-head">
 
 
-                        <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
+                    <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
 
-                        <div class="row" style="display: flex; justify-content: space-around">
-                            <div class="col-xs-6 text-center">
-                                <form method="post">
-                                    <button class="btn btn-light" style='font-size:16px; min-width:90px;height:35px;color:yellow;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="like">Like  <i class='far fa-thumbs-up'></i> </button>
-                                </form>
-                            </div>
-                            <div class="col-xs-6 text-center">
-                                <form method="post">
-                                    <button class="btn btn-light" style='font-size:16px; min-width: 90px;height: 35px; color:red;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="dislike">Dislike  <i class='far fa-thumbs-down'></i> </button>
-                                </form>
-                            </div>
+                    <div class="row" style="display: flex; justify-content: space-around">
+                        <div class="col-xs-6 text-center">
+                            <form method="post">
+                                <button class="btn btn-light" style='font-size:16px; min-width:90px;height:35px;color:yellow;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="like">Like  <i class='far fa-thumbs-up'></i> </button>
+                            </form>
                         </div>
+                        <div class="col-xs-6 text-center">
+                            <form method="post">
+                                <button class="btn btn-light" style='font-size:16px; min-width: 90px;height: 35px; color:red;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="dislike">Dislike  <i class='far fa-thumbs-down'></i> </button>
+                            </form>
+                        </div>
+                    </div>
 
 
+                    <div class="row">
+                        <div id="description" class="description col-6 text-center">
+                            <img id="icon-desc" src=@w.ImgIcon />
+                            <p class="desc" style="white-space:nowrap; font-size:x-large;">@w.Description</p>
+                        </div>
+                        <div id="temperature" class="col-6 text-center" style="overflow:hidden;">
+                            <p id="icon-thermometer" class="wi wi-thermometer"></p>
+                            <p>@w.Temperatur &#8451;</p>
+                        </div>
+                    </div>
+                    <!-- weather body header -->
+                    <div class="weather-body">
                         <div class="row">
-                            <div id="description" class="description col-6 text-center">
-                                <img id="icon-desc" src=@w.ImgIcon />
-                                <p class="desc" style="white-space:nowrap; font-size:x-large;">@w.Description</p>
+                            <div class="humidity col-4 text-center">
+                                <i class="wi wi-raindrop fa-1x"></i>
                             </div>
-                            <div id="temperature" class="col-6 text-center" style="overflow:hidden;">
-                                <p id="icon-thermometer" class="wi wi-thermometer"></p>
-                                <p>@w.Temperatur &#8451;</p>
+                            <div class="wind col-4 text-center">
+                                <i class="wi wi-strong-wind fa-1x"></i>
+                            </div>
+                            <div class="visibility col-4 text-center">
+                                <i class="wi wi-wu-rain fa-1x"></i>
                             </div>
                         </div>
-                        <!-- weather body header -->
-                        <div class="weather-body">
-                            <div class="row">
-                                <div class="humidity col-4 text-center">
-                                    <i class="wi wi-raindrop fa-1x"></i>
-                                </div>
-                                <div class="wind col-4 text-center">
-                                    <i class="wi wi-strong-wind fa-1x"></i>
-                                </div>
-                                <div class="visibility col-4 text-center">
-                                    <i class="wi wi-wu-rain fa-1x"></i>
-                                </div>
+                        <!-- weather body data -->
+                        <div class="row">
+                            <div id="humidity" class="humidity-data col-4 text-center" style="white-space:nowrap">
+                                @w.Humidity %
                             </div>
-                            <!-- weather body data -->
-                            <div class="row">
-                                <div id="humidity" class="humidity-data col-4 text-center" style="white-space:nowrap">
-                                    @w.Humidity %
-                                </div>
-                                <div id="wind" class="wind-data col-4 text-center" style="white-space:nowrap">
-                                    @w.Wind m/s
-                                </div>
-                                <div id="visibility" class="degree-data col-4 text-center" style="white-space:nowrap">
-                                    @w.Precipitation mm
-                                </div>
+                            <div id="wind" class="wind-data col-4 text-center" style="white-space:nowrap">
+                                @w.Wind m/s
+                            </div>
+                            <div id="visibility" class="degree-data col-4 text-center" style="white-space:nowrap">
+                                @w.Precipitation mm
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        };
-    </div>
+        </div>
+    };
+</div>
 
 @*Like and dislike icons*@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <script src="~/js/background.js" asp-append-version="true"></script>
-
-
-
-@*@foreach (var w in Model.Weathers)
-    {
-        <div class="alert" style="background-color:aqua">
-            <h1>@w.Supplier.Name</h1>
-            <p>@w.Temperatur</p>
-            <p> @w.Description </p>
-            <p>Wind: @w.Wind </p>
-            <p>Humidity: @w.Humidity </p>
-            <form method="post">
-                <button type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName">Gilla</button>
-            </form>
-        </div>
-    }*@
 
