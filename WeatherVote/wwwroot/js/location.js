@@ -11,8 +11,6 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    //locDiv.innerHTML = "Latitude: " + position.coords.latitude +
-    //    "<br>Longitude: " + position.coords.longitude;
 
     let lat = position.coords.latitude
     let lon = position.coords.longitude

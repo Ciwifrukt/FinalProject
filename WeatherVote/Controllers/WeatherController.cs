@@ -80,11 +80,23 @@ namespace WeatherVote.Controllers
             var locname = await _locationService.LocationName();
             var weatherList = _context.Weathers.ToList();
             var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
-            if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) { 
+
+            if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) {
+
+                _context.Weathers.RemoveRange(_context.Weathers);
+
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
             weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+
+                foreach (var weather in weatherList)
+                {
+                _context.Weathers.Add(weather);
+
+                }
+                _context.SaveChanges();
+
             }
             else
             {

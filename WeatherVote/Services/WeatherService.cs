@@ -48,7 +48,9 @@ namespace WeatherVote.Services
                 Precipitation = (float)prec,
                 Wind = wind,
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
-                Supplier = new WeatherSupplier { Name = "Open Weather" }
+                Supplier = new WeatherSupplier { Name = "Open Weather" },
+                Updated = DateTime.Now
+                
             };
         }
 
@@ -76,7 +78,9 @@ namespace WeatherVote.Services
                 Precipitation = (float)prec,
                 Wind = wind,
                 ImgIcon = GetImgIcon(imgIconUrl, now),
-                Supplier = new WeatherSupplier { Name = "SMHI" }
+                Supplier = new WeatherSupplier { Name = "SMHI" },
+                Updated = DateTime.Now
+
             };
         }
 
@@ -139,7 +143,9 @@ namespace WeatherVote.Services
                 Wind = float.Parse(wind, correctComma.NumberFormat),
                 ImgIcon = GetImgIcon(imgIconUrl, a),
                 Precipitation = float.Parse(prec, correctComma.NumberFormat),
-                Supplier = new WeatherSupplier { Name = "YR.no" }
+                Supplier = new WeatherSupplier { Name = "YR.no" },
+                Updated = DateTime.Now
+
             };
         }
 
