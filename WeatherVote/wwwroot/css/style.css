@@ -70,24 +70,30 @@ body {
 
 
 #icon-desc {
+    max-width: 100%;
+    height: auto;
     font-size: 5rem;
     padding-top: 2rem;
 }
 
 #description {
-	font-size: 2rem;
+	font-size: 2vw;
 }
 
 #temperature {
-	font-size: 7rem;
+    font-size: calc(20px + 3vw);
 }
 
 #icon-thermometer {
-	font-size: 5rem;
+	font-size: 4vw;
 }
 
 #humidity, #wind, #visibility {
 	font-size: 2rem;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
+}
+
+.desc {
+    font-size: calc(12px + 1.5vw);
 }
