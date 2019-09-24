@@ -4,7 +4,6 @@
 
 /* Bg image*/
 body {
-  background-image: url("../img/stars.jpg");
   min-height: 100vh;
   min-width: 100vw;
   background-size: cover;
@@ -14,14 +13,17 @@ body {
   color: white;
 }
 
+
+
+
 /* Transparent bg on top of bg image*/
 .hero {
-  position: absolute;
-  min-height: 100vh;
-  min-width: 100vw;
-  top: 0;
-  bottom: 0;
-  z-index: -5;
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vw;
+    top: 0;
+    bottom: 0;
+    z-index: -5;
 }
 
 /* Transparent Navagiation bar & White text
@@ -52,6 +54,8 @@ body {
 	color: white;
 }
 
+
+
 .weather-head {
 	height: 50%;
 }
@@ -72,18 +76,25 @@ body {
     height: auto;
     font-size: 5rem;
     padding-top: 2rem;
+    padding-bottom: 1.25rem;
 }
 
-#description {
+/*#description {
 	font-size: 2vw;
-}
+}*/
 
 #temperature {
-    font-size: calc(20px + 3vw);
+    /*font-size: calc(20px + 3vw);*/
+    font-size:x-large;
+    padding-bottom:1rem;
 }
 
 #icon-thermometer {
-	font-size: 4vw;
+    max-width: 100%;
+    height: auto;
+    font-size: 5rem;
+    padding-top: 3.5rem;
+    padding-bottom: 0.5rem;
 }
 
 #humidity, #wind, #visibility {
@@ -93,5 +104,6 @@ body {
 }
 
 .desc {
-    font-size: calc(12px + 1.5vw);
+    /*font-size: calc(12px + 1.5vw);*/
+    padding-bottom: 1rem;
 }
