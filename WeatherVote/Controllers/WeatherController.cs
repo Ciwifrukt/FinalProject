@@ -4,13 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using WeatherVote.Models;
 using WeatherVote.Services;
 using WeatherVote.ViewModels;
-using Xamarin.Forms.Maps;
 
 namespace WeatherVote.Controllers
 {
@@ -79,7 +76,9 @@ namespace WeatherVote.Controllers
         {
             var locname = await _locationService.LocationName();
             var weatherList = _context.Weathers.ToList();
-            var position = new LoactionCoord { CityName = locname, Latitude = Decimal.Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3).ToString(new CultureInfo("en")) };
+            var position = new LoactionCoord { CityName = locname, Latitude = Decimal
+                .Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3)
+                .ToString(new CultureInfo("en")) };
 
             if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) {
 

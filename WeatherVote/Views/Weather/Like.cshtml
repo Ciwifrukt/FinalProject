@@ -1,25 +1,21 @@
 ﻿@model WeatherVM
-<!-- time, date and location  -->
-<div class="container" style="margin-bottom:3em">
-
-        <div class="weather text-center" style="padding-bottom:1em; margin-top:1em; font-size:25px;">
-
-            <a>@Model.City<br /></a>
-            <a>@Model.Date</a>
+<!-- weather section  -->
+    <div class="container" style="margin-bottom:3em">
+        <div class="row">
+            <div class="col-lg-8">@Model.City</div>
+            <div class="col-lg-8">@Model.Date</div>
         </div>
 
+        @foreach (var w in Model.Weathers)
+        {
 
-    @*comment*@
-    <!-- weather section  -->
-    @foreach (var w in Model.Weathers)
-    {
-        <div class="row">
-            <div  class="col-lg-8 mx-auto weather">
-                <!-- weather header section -->
-                <div class="weather-head">
+            <div class="row">
+                <div id="" class="col-lg-8 mx-auto weather">
+                    <!-- weather header section -->
+                    <div class="weather-head" onclick="showa(this)">
 
 
-                    <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
+                        <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
 
                     <div class="row" style="display: flex; justify-content: space-around">
                         <div class="col-xs-6 text-center">
@@ -49,13 +45,13 @@
                     <div class="weather-body">
                         <div class="row">
                             <div class="humidity col-4 text-center">
-                                <i class="wi wi-raindrop fa-1x"></i>
+                                <i class="wi wi-raindrop fa-1x"></i><span class="humi"> Humidity</span>
                             </div>
                             <div class="wind col-4 text-center">
-                                <i class="wi wi-strong-wind fa-1x"></i>
+                                <i class="wi wi-strong-wind fa-1x"></i><span class="humi"> Wind Speed</span>
                             </div>
                             <div class="visibility col-4 text-center">
-                                <i class="wi wi-wu-rain fa-1x"></i>
+                                <i class="wi wi-wu-rain fa-1x"></i><span class="humi"> Precipitation</span>
                             </div>
                         </div>
                         <!-- weather body data -->
