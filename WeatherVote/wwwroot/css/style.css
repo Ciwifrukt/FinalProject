@@ -95,3 +95,7 @@ body {
 .desc {
     font-size: calc(12px + 1.5vw);
 }
+
+.weather-body {
+    font-size: calc(12px + 1.5vw);
+}
