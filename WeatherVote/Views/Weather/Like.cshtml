@@ -20,12 +20,12 @@
                     <div class="row" style="display: flex; justify-content: space-around">
                         <div class="col-xs-6 text-center">
                             <form method="post">
-                                <button class="btn btn-light" style='font-size:16px; min-width:90px;height:35px;color:yellow;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="like">Like  <i class='far fa-thumbs-up'></i> </button>
+                                <button class="btn btn-light" id="button1" style='font-size:16px; min-width:90px;height:35px;color:yellow;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="like">Like  <i class='far fa-thumbs-up'></i> </button>
                             </form>
                         </div>
                         <div class="col-xs-6 text-center">
                             <form method="post">
-                                <button class="btn btn-light" style='font-size:16px; min-width: 90px;height: 35px; color:red;background-color:transparent' type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="dislike">Dislike  <i class='far fa-thumbs-down'></i> </button>
+                                <button class="btn btn-light" id="button2" style="font-size:16px; min-width: 90px;height: 35px; color:red;background-color:transparent;" type="submit" asp-action="AddLikes" asp-route-wname="@w.Supplier.Name" asp-route-loc="@w.Loc.CityName" asp-route-typ="dislike">Dislike  <i class='far fa-thumbs-down'></i> </button>
                             </form>
                         </div>
                     </div>
