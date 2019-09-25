@@ -75,18 +75,16 @@ namespace WeatherVote.Controllers
 
         public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
-            try
-            {
-
-                var locname = await _locationService.LocationName();
+            string lons = Decimal.Round(lon, 3).ToString(new CultureInfo("en"));
+            string lats = Decimal.Round(lat, 3).ToString(new CultureInfo("en"));
+            
+                var locname = await _locationService.LocationName(lats,lons);
                 var weatherList = _context.Weathers.ToList();
                 var position = new LoactionCoord
                 {
                     CityName = locname,
-                    Latitude = Decimal
-                    .Round(lat, 3).ToString(new CultureInfo("en")),
-                    Longitude = Decimal.Round(lon, 3)
-                    .ToString(new CultureInfo("en"))
+                    Latitude = lats,
+                    Longitude = lons
                 };
 
                 if (weatherList.Any(x => x.Updated <= DateTime.UtcNow.AddHours(2).AddMinutes(10)) || weatherList.Count == 0)
@@ -125,12 +123,7 @@ namespace WeatherVote.Controllers
                 };
 
                 return View("Like", allWeathers);
-            }
-            catch (Exception ex)
-            {
-                System.IO.File.AppendAllLines("feel.txt", new[] { $"{DateTime.UtcNow.AddHours(2)} {ex.Message} {ex.StackTrace}", "", "", ""});
-                return Ok("Fel");
-            }
+
         }
 
         private List<Weather> SortWeathers(List<Weather> weatherList)
@@ -173,6 +166,7 @@ namespace WeatherVote.Controllers
         }
         public IActionResult AboutUs()
         {
+     
             return View();
         }
 
