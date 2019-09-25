@@ -1,22 +1,20 @@
 ﻿@model WeatherVM
-<!-- weather section  -->
-    <div class="container" style="margin-bottom:3em">
+
+<div class="container" style="margin-bottom:3em">
+    <!-- Time and location section  -->
+    <div class="weather text-center" style="font-size:20px; padding-top:1rem; padding-bottom:1rem;">
+        <div>@Model.City</div>
+        <div>@Model.Date</div>
+    </div>
+
+    <!-- weather section  -->
+    @foreach (var w in Model.Weathers)
+    {
         <div class="row">
-            <div class="col-lg-8">@Model.City</div>
-            <div class="col-lg-8">@Model.Date</div>
-        </div>
-
-        @foreach (var w in Model.Weathers)
-        {
-
-            <div class="row">
-                <div id="" class="col-lg-8 mx-auto weather">
-                    <!-- weather header section -->
-                    <div class="weather-head" onclick="showa(this)">
-
-
-                        <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
-
+            <div id="" class="col-lg-8 mx-auto weather">
+                <!-- weather header section -->
+                <div class="weather-head" onclick="showa(this)">
+                    <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
                     <div class="row" style="display: flex; justify-content: space-around">
                         <div class="col-xs-6 text-center">
                             <form method="post">
@@ -45,13 +43,13 @@
                     <div class="weather-body" style="display:none">
                         <div class="row">
                             <div class="humidity col-4 text-center">
-                                <i class="wi wi-raindrop fa-1x"></i><span class="humi"> Humidity</span>
+                                <i class="wi wi-raindrop fa-1x"></i><span class="humi"style="white-space:nowrap;"><br/>Humidity</span>
                             </div>
                             <div class="wind col-4 text-center">
-                                <i class="wi wi-strong-wind fa-1x"></i><span class="humi"> Wind Speed</span>
+                                <i class="wi wi-strong-wind fa-1x"></i><span class="humi" style="white-space:nowrap;"><br />Wind Speed</span>
                             </div>
                             <div class="visibility col-4 text-center">
-                                <i class="wi wi-wu-rain fa-1x"></i><span class="humi"> Precipitation</span>
+                                <i class="wi wi-wu-rain fa-1x"></i><span class="humi" style="white-space:nowrap;"><br />Precipitation</span>
                             </div>
                         </div>
                         <!-- weather body data -->
@@ -75,5 +73,6 @@
 
 @*Like and dislike icons*@
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+@*background images changes after on time*@
 <script src="~/js/background.js" asp-append-version="true"></script>
 
