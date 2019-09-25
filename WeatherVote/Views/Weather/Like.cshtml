@@ -2,8 +2,8 @@
 
 <div class="container" style="margin-bottom:3em">
     <!-- Time and location section  -->
-    <div class="weather text-center" style="font-size:20px; padding-top:1rem; padding-bottom:1rem;">
-        <div>@Model.City</div>
+    <div id="cityhead" class="weather text-center col-lg-8 mx-auto" style="font-size:20px; padding-top:1rem; padding-bottom:1rem;">
+        <div style="font-size:3rem">@Model.City</div>
         <div>@Model.Date</div>
     </div>
 
@@ -11,7 +11,7 @@
     @foreach (var w in Model.Weathers)
     {
         <div class="row">
-            <div id="" class="col-lg-8 mx-auto weather">
+            <div id="" class="col-lg-8 mx-auto weather hov">
                 <!-- weather header section -->
                 <div class="weather-head" onclick="showa(this)">
                     <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
@@ -35,8 +35,9 @@
                             <p class="desc" style="white-space:nowrap; font-size:x-large;">@w.Description</p>
                         </div>
                         <div id="temperature" class="col-6 text-center" style="overflow:hidden;">
+                            <p id="tempi">@w.Temperatur &#8451;</p>
+
                             <p id="icon-thermometer" class="wi wi-thermometer"></p>
-                            <p>@w.Temperatur &#8451;</p>
                         </div>
                     </div>
                     <!-- weather body header -->
