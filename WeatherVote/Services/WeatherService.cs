@@ -49,7 +49,7 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
-                Updated = DateTime.Now
+                Updated = DateTime.UtcNow.AddHours(2)
                 
             };
         }
@@ -57,10 +57,14 @@ namespace WeatherVote.Services
         public async Task<Weather> SMHIWeather(LoactionCoord location)
         {
             var url = $"https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/{location.Longitude}/lat/{location.Latitude}/data.json";
+
+
             var SMHIjsonString = await _http.Get(url);
 
+            System.IO.File.AppendAllLines("looog.txt", new[] { $"{DateTime.UtcNow.AddHours(2)} {SMHIjsonString}", "", "", "" });
+
             var smhiRootObject = JsonConvert.DeserializeObject<SMHI.Rootobjectsmhi>(SMHIjsonString);
-            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, 0, 0);
+            DateTime now = new DateTime(DateTime.UtcNow.AddHours(2).Year, DateTime.UtcNow.AddHours(2).Month, DateTime.UtcNow.AddHours(2).Day, DateTime.UtcNow.AddHours(2).Hour, 0, 0);
 
             var temp = GetSmhiValue("t", now, smhiRootObject);
             var hum = GetSmhiValue("r", now, smhiRootObject);
@@ -79,7 +83,7 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = GetImgIcon(imgIconUrl, now),
                 Supplier = new WeatherSupplier { Name = "SMHI" },
-                Updated = DateTime.Now
+                Updated = DateTime.UtcNow.AddHours(2)
 
             };
         }
@@ -98,7 +102,7 @@ namespace WeatherVote.Services
             string data = JsonConvert.SerializeXmlNode(doc);
             data = data.Replace("@", "");
 
-            var a = DateTime.Now;
+            var a = DateTime.UtcNow.AddHours(2);
             DateTime to = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
             DateTime from = new DateTime(a.Year, a.Month, a.Day, a.Hour+1, 0, 0, 0);
 
@@ -144,7 +148,7 @@ namespace WeatherVote.Services
                 ImgIcon = GetImgIcon(imgIconUrl, a),
                 Precipitation = float.Parse(prec, correctComma.NumberFormat),
                 Supplier = new WeatherSupplier { Name = "YR.no" },
-                Updated = DateTime.Now
+                Updated = DateTime.UtcNow.AddHours(2)
 
             };
         }

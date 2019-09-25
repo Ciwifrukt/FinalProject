@@ -14,7 +14,7 @@ namespace WeatherVote.Controllers
 
     public class WeatherController : Controller
     {
-    public static WeatherVM allWeathers = new WeatherVM();
+        public static WeatherVM allWeathers = new WeatherVM();
         private readonly WeatherService _weatherService;
         private readonly LocationService _locationService;
         private readonly VotingContext _context;
@@ -27,7 +27,7 @@ namespace WeatherVote.Controllers
         }
 
         public ActionResult Index()
-        {  
+        {
             return View();
         }
 
@@ -40,22 +40,23 @@ namespace WeatherVote.Controllers
 
         public IActionResult AddLikes(string wname, string loc, string typ)
         {
-            if(!_context.WeatherSuppliers.Any(x => x.Name == wname)) {
+            if (!_context.WeatherSuppliers.Any(x => x.Name == wname))
+            {
                 var w = new WeatherSupplier { Name = wname };
                 _context.WeatherSuppliers.Add(w);
-                _context.Votes.Add(new Vote { Likes = typ == "like" ? 1 : -1, Supplier = w, Location = loc }) ;
+                _context.Votes.Add(new Vote { Likes = typ == "like" ? 1 : -1, Supplier = w, Location = loc });
             }
-            else if(!_context.Votes.Any(x=>x.Supplier.Name == wname))
+            else if (!_context.Votes.Any(x => x.Supplier.Name == wname))
             {
                 var w = _context.WeatherSuppliers.First(x => x.Name == wname);
-                _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc});
+                _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc });
 
             }
             else
             {
                 var vote = _context.Votes.First(x => x.Supplier.Name == wname);
-                if(typ=="like")
-                vote.Likes++;
+                if (typ == "like")
+                    vote.Likes++;
                 else
                     vote.Likes--;
 
@@ -65,55 +66,71 @@ namespace WeatherVote.Controllers
             var sortedWeather = SortWeathers(allWeathers.Weathers);
             allWeathers.Weathers = sortedWeather;
             return View("Like", allWeathers);
-            
+
         }
 
 
 
-      
+
 
         public async Task<IActionResult> GetWeather(decimal lat, decimal lon)
         {
-            var locname = await _locationService.LocationName();
-            var weatherList = _context.Weathers.ToList();
-            var position = new LoactionCoord { CityName = locname, Latitude = Decimal
-                .Round(lat, 3).ToString(new CultureInfo("en")), Longitude = Decimal.Round(lon, 3)
-                .ToString(new CultureInfo("en")) };
+            try
+            {
 
-            if (weatherList.Any(x => x.Updated <= DateTime.Now.AddMinutes(10))|| weatherList.Count==0) {
-
-                _context.Weathers.RemoveRange(_context.Weathers);
-
-            var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-            var smhiWeather = await _weatherService.SMHIWeather(position);
-            var yrWeather = await _weatherService.YRWeather(position);
-            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
-
-                foreach (var weather in weatherList)
+                var locname = await _locationService.LocationName();
+                var weatherList = _context.Weathers.ToList();
+                var position = new LoactionCoord
                 {
-                _context.Weathers.Add(weather);
+                    CityName = locname,
+                    Latitude = Decimal
+                    .Round(lat, 3).ToString(new CultureInfo("en")),
+                    Longitude = Decimal.Round(lon, 3)
+                    .ToString(new CultureInfo("en"))
+                };
+
+                if (weatherList.Any(x => x.Updated <= DateTime.UtcNow.AddHours(2).AddMinutes(10)) || weatherList.Count == 0)
+                {
+
+                    _context.Weathers.RemoveRange(_context.Weathers);
+
+                    var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+                    var smhiWeather = await _weatherService.SMHIWeather(position);
+                    var yrWeather = await _weatherService.YRWeather(position);
+                    weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+
+                    foreach (var weather in weatherList)
+                    {
+                        _context.Weathers.Add(weather);
+
+                    }
+                    _context.SaveChanges();
 
                 }
-                _context.SaveChanges();
+                else
+                {
+                    weatherList = _context.Weathers.ToList();
+                }
+                var sortedWeather = SortWeathers(weatherList);
+                foreach (var item in sortedWeather)
+                {
+                    item.Updated = DateTime.UtcNow.AddHours(2);
+                }
 
+                allWeathers = new WeatherVM
+                {
+                    Weathers = sortedWeather,
+                    City = position.CityName,
+                    Date = DateTime.UtcNow.AddHours(2).ToString("dddd, dd MMMM HH:mm")
+                };
+
+                return View("Like", allWeathers);
             }
-            else
+            catch (Exception ex)
             {
-                weatherList= _context.Weathers.ToList();
+                System.IO.File.AppendAllLines("feel.txt", new[] { $"{DateTime.UtcNow.AddHours(2)} {ex.Message} {ex.StackTrace}", "", "", ""});
+                return Ok("Fel");
             }
-            var sortedWeather = SortWeathers(weatherList);
-            foreach (var item in sortedWeather)
-            {
-                item.Updated = DateTime.Now;
-            }
-
-            allWeathers = new WeatherVM {
-                Weathers = sortedWeather,
-                City = position.CityName,
-                Date = DateTime.Now.ToString("dddd, dd MMMM HH:mm")
-            };
-
-            return View("Like", allWeathers);
         }
 
         private List<Weather> SortWeathers(List<Weather> weatherList)
