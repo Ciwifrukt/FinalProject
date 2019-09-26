@@ -109,6 +109,8 @@ namespace WeatherVote.Services
             yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
             var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location;
             var rootToGetIcon = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to && x.to == from).location.symbol;
+            //from: "2019-09-26T09:00:00Z"
+            var prog1 = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 12).location;
 
             var unformatedDesc = rootToGetIcon.id;
             var imgIconUrl = float.Parse(rootToGetIcon.number);
