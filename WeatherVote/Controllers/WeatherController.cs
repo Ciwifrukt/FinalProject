@@ -89,14 +89,14 @@ namespace WeatherVote.Controllers
                 {
                 _context.Forecasts.RemoveRange(_context.Forecasts);
                     _context.Weathers.RemoveRange(_context.Weathers);
-                
 
 
 
-            //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-            //var yrWeather = await _weatherService.YRWeather(position);
-            var smhiWeather = await _weatherService.SMHIWeather(position);
-            weatherList = new List<Weather> {/* openWeatherWeather, yrWeather, */smhiWeather };
+
+                //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+                var yrWeather = await _weatherService.YRWeather(position);
+                var smhiWeather = await _weatherService.SMHIWeather(position);
+            weatherList = new List<Weather> { /*openWeatherWeather, */yrWeather, smhiWeather };
 
                     foreach (var weather in weatherList)
                     {
