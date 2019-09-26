@@ -32,7 +32,7 @@ namespace WeatherVote.Services
             var forecastOWjsonString = await _http.Get(forecastWeatherurl);
 
             var forecastOWrRO = JsonConvert.DeserializeObject<OpenWeatherForecast.Rootobject>(forecastOWjsonString);
-            List<Forecast> weatherForecast = new List<Forecast> { };
+            List<Forecast> weatherForecast = new List<Forecast>();
             for (int n = 0; n < 3; n++)
             {
                 var now = DateTime.UtcNow.ToString("hh:00:00");
@@ -96,7 +96,7 @@ namespace WeatherVote.Services
 
             return weatherForecast;
         }
-        //----------------------------------------//
+
 
 
 
@@ -123,6 +123,7 @@ namespace WeatherVote.Services
                 var snow = currentOWrRO.snow._3h == null ? 0 : currentOWrRO.snow._3h;
                 prec = rain == 0 ? snow == 0 ? 0 : snow : rain;
             }
+            var forec = await OpenWeatherWeatherorecast(location);
             return new Models.Weather
             {
                 Temperatur = temp,
@@ -133,7 +134,8 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
-                Updated = DateTime.UtcNow.AddHours(2)
+                Updated = DateTime.UtcNow.AddHours(2),
+                Forecasts = forec
                 
             };
         }
