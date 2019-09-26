@@ -38,13 +38,14 @@ namespace WeatherVote.Services
 
             for (int n = 0; n < 3; n++)
             {
-                var temp1 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
+                var temp1 = decimal.Parse(forecastOWrRO.list[n+1].main.temp.ToString());
                 var tempA = float.Parse(Decimal.Round(temp1, 1).ToString());
 
                 weatherForecast.Add(new Models.Forecast
                 {
                     Temperatur = tempA,
-                    ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[0].icon}.png",
+                    ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n+1].weather[0].icon}.png",
+                    Time = forecastOWrRO.list[n+1].dt_txt.Split(" ")[1].Remove(2),
                 });
             }
             return weatherForecast;
