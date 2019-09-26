@@ -87,16 +87,16 @@ namespace WeatherVote.Controllers
 
                 if (weatherList.Any(x => x.Updated <= DateTime.UtcNow.AddHours(2).AddMinutes(10)) || weatherList.Count == 0)
                 {
-
+                _context.Forecasts.RemoveRange(_context.Forecasts);
                     _context.Weathers.RemoveRange(_context.Weathers);
 
 
-            var openWeatherWeatherForecast = await _weatherService.OpenWeatherWeatherorecast(position);
 
-            var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-            var smhiWeather = await _weatherService.SMHIWeather(position);
+
+            //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
-            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather};
+            var smhiWeather = await _weatherService.SMHIWeather(position);
+            weatherList = new List<Weather> {/* openWeatherWeather,*/ yrWeather, smhiWeather };
 
                     foreach (var weather in weatherList)
                     {

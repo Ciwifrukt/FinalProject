@@ -11,7 +11,8 @@ namespace WeatherVote.Models
         public int Id { get; set; }
         public float Temperatur { get; set; }
         public string ImgIcon { get; set; }
-        public string time { get; set; }
+        public string Time { get; set; }
+
 
     }
 }

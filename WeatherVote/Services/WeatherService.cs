@@ -135,19 +135,21 @@ namespace WeatherVote.Services
 
         private List<Forecast> GetSMHIForecast(SMHI.Rootobjectsmhi smhiRootObject)
         {
-            var start = DateTime.Now.AddHours(2);
+            var start = DateTime.UtcNow.AddHours(2);
             var roundup = TimeSpan.FromMinutes(60);
             var time = int.Parse(RoundUp(start, roundup).Hour.ToString());
             int real;
             real = time > 0 ? time > 3 ? time > 6 ? time > 9 ? time > 12 ? time > 15 ? time > 18 ? time > 21 ? 0 : 21 : 18 : 15 : 12 : 9 : 6 : 3 : 0;
-            var ti = DateTime.Parse(real.ToString());
+            DateTime ti = new DateTime(DateTime.UtcNow.AddHours(2).Year, DateTime.UtcNow.AddHours(2).Month, DateTime.UtcNow.AddHours(2).Day, real, 0, 0);
+
+            //var ti = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, real, DateTime.Now.Minute, DateTime.Now.Second);
             var fore = new List<Forecast>();
             for (int i = 0; i < 3; i++)
             {
 
-                var temp = GetSmhiValue("t", ti, smhiRootObject);
-                var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
-                fore.Add(new Forecast { ImgIcon = GetImgIcon(img, ti), Temperatur = temp, time = ti.ToString() });
+            var temp = GetSmhiValue("t", ti, smhiRootObject);
+            var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
+                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, Time= ti.Hour.ToString() });
                 ti = ti.AddHours(3);
             }
 
@@ -165,6 +167,8 @@ namespace WeatherVote.Services
 
         public async Task<Models.Weather> YRWeather(LoactionCoord location)
         {
+            var correctComma = new CultureInfo("en-US");
+
             XmlDocument doc = new XmlDocument();
 
             var yrroot = new Models.Rootobject();
@@ -183,8 +187,59 @@ namespace WeatherVote.Services
             yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
             var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location;
             var rootToGetIcon = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to && x.to == from).location.symbol;
-            //from: "2019-09-26T09:00:00Z"
-            var prog1 = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 12).location;
+
+            var forecastTemp = new List<Forecast>();
+            var forecast = new List<Forecast>();
+
+            var prog00t = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 00 && x.to.Hour == 00).location.temperature.value;
+            var prog00s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 00 && x.to.Hour == 01).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = float.Parse(prog00t, correctComma.NumberFormat), ImgIcon = prog00s, Time = "00" });
+
+            var prog03t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 03 && x.to.Hour == 03).location.temperature.value, correctComma.NumberFormat);
+            var prog03s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 03 && x.to.Hour == 04).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog03t, ImgIcon = prog03s, Time = "03" });
+
+
+            var prog06t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 06 && x.to.Hour == 06).location.temperature.value, correctComma.NumberFormat);
+            var prog06s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 06 && x.to.Hour == 07).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog06t, ImgIcon = prog06s, Time = "06" });
+
+
+            var prog09t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 09 && x.to.Hour == 09).location.temperature.value, correctComma.NumberFormat);
+            var prog09s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 09 && x.to.Hour == 10).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog09t, ImgIcon = prog09s, Time = "09" });
+
+
+            var prog12t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 12).location.temperature.value, correctComma.NumberFormat);
+            var prog12s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 13).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog12t, ImgIcon = prog12s, Time = "12" });
+
+
+            var prog15t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 15 && x.to.Hour == 15).location.temperature.value, correctComma.NumberFormat);
+            var prog15s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 15 && x.to.Hour == 16).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog15t, ImgIcon = prog15s, Time = "15" });
+
+
+            var prog18t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 18 && x.to.Hour == 18).location.temperature.value, correctComma.NumberFormat);
+            var prog18s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 18 && x.to.Hour == 19).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog18t, ImgIcon = prog18s, Time = "18" });
+
+
+            var prog21t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 21 && x.to.Hour == 21).location.temperature.value, correctComma.NumberFormat);
+            var prog21s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 21 && x.to.Hour == 22).location.symbol.number;
+            forecastTemp.Add(new Forecast { Temperatur = prog21t, ImgIcon = prog21s, Time = "21" });
+
+            foreach (var item in forecastTemp)
+            {
+                var t = new DateTime(a.Year, a.Month, a.Day, int.Parse(item.Time), 0, 0, 0);
+                
+                item.ImgIcon = GetImgIcon(float.Parse(item.ImgIcon, correctComma.NumberFormat), t);
+                forecast.Add(item);
+            }
+
+            var nått = forecast.Where(x => int.Parse(x.Time) > a.Hour);
+
+
 
             var unformatedDesc = rootToGetIcon.id;
             var imgIconUrl = float.Parse(rootToGetIcon.number);
@@ -207,12 +262,6 @@ namespace WeatherVote.Services
                 prec = rootNow.precipitation.value;
             }
 
-            temp = temp.Replace(".", ",");
-            humid = humid.Replace(".", ",");
-            wind = wind.Replace(".", ",");
-            prec = prec.Replace(".", ",");
-
-            var correctComma = new CultureInfo("sv-SE");
 
             return new Models.Weather
             {
@@ -224,6 +273,7 @@ namespace WeatherVote.Services
                 ImgIcon = GetImgIcon(imgIconUrl, a),
                 Precipitation = float.Parse(prec, correctComma.NumberFormat),
                 Supplier = new WeatherSupplier { Name = "YR.no" },
+                Forecasts = nått.ToList(),
                 Updated = DateTime.UtcNow.AddHours(2)
 
             };
@@ -327,18 +377,18 @@ namespace WeatherVote.Services
                     return null;
             }
         }
-        public string GetImgIcon(float imgsymbol, DateTime now)
+        public string GetImgIcon(float imgsymbol, DateTime time)
         {
             switch (imgsymbol)
             {
 
                 case 1:
                 case 2:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return "/img/weathericons/01n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return "/img/weathericons/01m.png";
                     }
@@ -349,11 +399,11 @@ namespace WeatherVote.Services
 
                 case 3:
                 case 4:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/02n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/02m.png";
                     }
@@ -363,11 +413,11 @@ namespace WeatherVote.Services
                     }
 
                 case 5:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/03n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/03m.png";
                     }
@@ -383,11 +433,11 @@ namespace WeatherVote.Services
                     return @"/img/weathericons/15.png";
 
                 case 8:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/40n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/40m.png";
                     }
@@ -397,11 +447,11 @@ namespace WeatherVote.Services
                     }
 
                 case 9:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/05n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/05m.png";
                     }
@@ -411,11 +461,11 @@ namespace WeatherVote.Services
                     }
 
                 case 10:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/41n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/41m.png";
                     }
@@ -428,11 +478,11 @@ namespace WeatherVote.Services
                     return "Thunderstorm";
 
                 case 12:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/42n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/42m.png";
                     }
@@ -442,11 +492,11 @@ namespace WeatherVote.Services
                     }
 
                 case 13:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/07n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/07m.png";
                     }
@@ -456,11 +506,11 @@ namespace WeatherVote.Services
                     }
 
                 case 14:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/43n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/43m.png";
                     }
@@ -470,11 +520,11 @@ namespace WeatherVote.Services
                     }
 
                 case 15:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/44n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/44m.png";
                     }
@@ -484,11 +534,11 @@ namespace WeatherVote.Services
                     }
 
                 case 16:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/08n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/08m.png";
                     }
@@ -498,11 +548,11 @@ namespace WeatherVote.Services
                     }
 
                 case 17:
-                    if (now.Hour >= 20 || now.Hour < 6)
+                    if (time.Hour >= 20 || time.Hour < 6)
                     {
                         return @"/img/weathericons/45n.png";
                     }
-                    else if (now.Hour >= 6 && now.Hour <= 8)
+                    else if (time.Hour >= 6 && time.Hour <= 8)
                     {
                         return @"/img/weathericons/45m.png";
                     }
