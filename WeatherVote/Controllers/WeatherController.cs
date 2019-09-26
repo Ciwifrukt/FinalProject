@@ -93,10 +93,10 @@ namespace WeatherVote.Controllers
 
 
 
-                //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-                var yrWeather = await _weatherService.YRWeather(position);
-                var smhiWeather = await _weatherService.SMHIWeather(position);
-            weatherList = new List<Weather> { /*openWeatherWeather, */yrWeather, smhiWeather };
+            //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+            var yrWeather = await _weatherService.YRWeather(position);
+            var smhiWeather = await _weatherService.SMHIWeather(position);
+            weatherList = new List<Weather> {/* openWeatherWeather,*/ yrWeather, smhiWeather };
 
                     foreach (var weather in weatherList)
                     {
