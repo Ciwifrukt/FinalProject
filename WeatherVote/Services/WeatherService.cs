@@ -239,37 +239,37 @@ namespace WeatherVote.Services
             forecastTemp.Add(new Forecast { Temperatur = float.Parse(prog00t, correctComma.NumberFormat), ImgIcon = prog00s, Time = "00" });
 
             var prog03t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 03 && x.to.Hour == 03).location.temperature.value, correctComma.NumberFormat);
-            var prog03s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 03 && x.to.Hour == 03).location.symbol.number;
+            var prog03s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 03 && x.to.Hour == 04).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog03t, ImgIcon = prog03s, Time = "03" });
 
 
             var prog06t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 06 && x.to.Hour == 06).location.temperature.value, correctComma.NumberFormat);
-            var prog06s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 06 && x.to.Hour == 06).location.symbol.number;
+            var prog06s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 06 && x.to.Hour == 07).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog06t, ImgIcon = prog06s, Time = "06" });
 
 
             var prog09t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 09 && x.to.Hour == 09).location.temperature.value, correctComma.NumberFormat);
-            var prog09s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 09 && x.to.Hour == 09).location.symbol.number;
+            var prog09s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 09 && x.to.Hour == 10).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog09t, ImgIcon = prog09s, Time = "09" });
 
 
             var prog12t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 12).location.temperature.value, correctComma.NumberFormat);
-            var prog12s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 12).location.symbol.number;
+            var prog12s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 12 && x.to.Hour == 13).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog12t, ImgIcon = prog12s, Time = "12" });
 
 
             var prog15t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 15 && x.to.Hour == 15).location.temperature.value, correctComma.NumberFormat);
-            var prog15s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 15 && x.to.Hour == 15).location.symbol.number;
+            var prog15s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 15 && x.to.Hour == 16).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog15t, ImgIcon = prog15s, Time = "15" });
 
 
             var prog18t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 18 && x.to.Hour == 18).location.temperature.value, correctComma.NumberFormat);
-            var prog18s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 18 && x.to.Hour == 18).location.symbol.number;
+            var prog18s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 18 && x.to.Hour == 19).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog18t, ImgIcon = prog18s, Time = "18" });
 
 
             var prog21t = float.Parse(yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 21 && x.to.Hour == 21).location.temperature.value, correctComma.NumberFormat);
-            var prog21s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 21 && x.to.Hour == 21).location.symbol.number;
+            var prog21s = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from.Hour == 21 && x.to.Hour == 22).location.symbol.number;
             forecastTemp.Add(new Forecast { Temperatur = prog21t, ImgIcon = prog21s, Time = "21" });
 
             foreach (var item in forecastTemp)
