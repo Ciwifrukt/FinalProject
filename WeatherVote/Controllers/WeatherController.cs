@@ -75,55 +75,55 @@ namespace WeatherVote.Controllers
         {
             string lons = Decimal.Round(lon, 3).ToString(new CultureInfo("en"));
             string lats = Decimal.Round(lat, 3).ToString(new CultureInfo("en"));
-            
-                var locname = await _locationService.LocationName(lats,lons);
-                var weatherList = _context.Weathers.ToList();
-                var position = new LoactionCoord
-                {
-                    CityName = locname,
-                    Latitude = lats,
-                    Longitude = lons
-                };
 
-                if (weatherList.Any(x => x.Updated <= DateTime.UtcNow.AddHours(2).AddMinutes(10)) || weatherList.Count == 0)
-                {
+            var locname = await _locationService.LocationName(lats, lons);
+            var weatherList = _context.Weathers.ToList();
+            var position = new LoactionCoord
+            {
+                CityName = locname,
+                Latitude = lats,
+                Longitude = lons
+            };
+
+            if (weatherList.Any(x => x.Updated <= DateTime.UtcNow.AddHours(2).AddMinutes(10)) || weatherList.Count == 0)
+            {
                 _context.Forecasts.RemoveRange(_context.Forecasts);
-                    _context.Weathers.RemoveRange(_context.Weathers);
+                _context.Weathers.RemoveRange(_context.Weathers);
 
 
 
 
-            //var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
-            var yrWeather = await _weatherService.YRWeather(position);
-            var smhiWeather = await _weatherService.SMHIWeather(position);
-            weatherList = new List<Weather> {/* openWeatherWeather,*/ yrWeather, smhiWeather };
+                var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+                var yrWeather = await _weatherService.YRWeather(position);
+                var smhiWeather = await _weatherService.SMHIWeather(position);
+                weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
 
-                    foreach (var weather in weatherList)
-                    {
-                        _context.Weathers.Add(weather);
-
-                    }
-                    _context.SaveChanges();
+                foreach (var weather in weatherList)
+                {
+                    _context.Weathers.Add(weather);
 
                 }
-                else
-                {
-                    weatherList = _context.Weathers.ToList();
-                }
-                var sortedWeather = SortWeathers(weatherList);
-                foreach (var item in sortedWeather)
-                {
-                    item.Updated = DateTime.UtcNow.AddHours(2);
-                }
+                _context.SaveChanges();
 
-                allWeathers = new WeatherVM
-                {
-                    Weathers = sortedWeather,
-                    City = position.CityName,
-                    Date = DateTime.UtcNow.AddHours(2).ToString("dddd, dd MMMM HH:mm")
-                };
+            }
+            else
+            {
+                weatherList = _context.Weathers.ToList();
+            }
+            var sortedWeather = SortWeathers(weatherList);
+            foreach (var item in sortedWeather)
+            {
+                item.Updated = DateTime.UtcNow.AddHours(2);
+            }
 
-                return View("Like", allWeathers);
+            allWeathers = new WeatherVM
+            {
+                Weathers = sortedWeather,
+                City = position.CityName,
+                Date = DateTime.UtcNow.AddHours(2).ToString("dddd, dd MMMM HH:mm")
+            };
+
+            return View("Like", allWeathers);
 
         }
 
@@ -167,7 +167,7 @@ namespace WeatherVote.Controllers
         }
         public IActionResult AboutUs()
         {
-     
+
             return View();
         }
     }

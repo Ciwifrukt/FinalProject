@@ -26,7 +26,7 @@ namespace WeatherVote.Services
         public async Task<List<Forecast>> OpenWeatherWeatherorecast(LoactionCoord location)
         {
             // var url = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
-
+            
             var apiKey = "cfdc9335f6a03abf829ab28b3249154b";
             var forecastWeatherurl = $"http://api.openweathermap.org/data/2.5/forecast?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
             var forecastOWjsonString = await _http.Get(forecastWeatherurl);
@@ -38,17 +38,13 @@ namespace WeatherVote.Services
 
             for (int n = 0; n < 3; n++)
             {
-                string[] apiHours = forecastOWrRO.list[n].dt_txt.Split(" ");              //"2019-09-26 00:00:00"
-
-
                 var temp1 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
                 var tempA = float.Parse(Decimal.Round(temp1, 1).ToString());
-
 
                 weatherForecast.Add(new Models.Forecast
                 {
                     Temperatur = tempA,
-                    ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[n].icon[n]}.png",
+                    ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[0].icon}.png",
                 });
             }
             return weatherForecast;
