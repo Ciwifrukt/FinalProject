@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using WeatherVote.Models;
+using static WeatherVote.Models.OpenWeatherForecast;
 
 namespace WeatherVote.Services
 {
@@ -17,6 +19,70 @@ namespace WeatherVote.Services
         {
             _http = http;
         }
+
+
+        //----------------------------------------//
+        public async Task<Models.Weather> OpenWeatherWeatherorecast(LoactionCoord location)
+        {
+            // var url = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
+
+            var apiKey = "cfdc9335f6a03abf829ab28b3249154b";
+            var forecastWeatherurl = $"http://api.openweathermap.org/data/2.5/forecast?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
+            var forecastOWjsonString = await _http.Get(forecastWeatherurl);
+
+            var forecastOWrRO = JsonConvert.DeserializeObject<OpenWeatherForecast.Rootobject>(forecastOWjsonString);
+
+            for (int n = 0; n < 3; n++)
+            {
+                var now = DateTime.UtcNow.ToString("hh:00:00");
+                var oneHour = DateTime.UtcNow.AddHours(1).ToString("hh:00:00");
+                var twoHour = DateTime.UtcNow.AddHours(2).ToString("hh:00:00");
+                var threeHours = DateTime.UtcNow.AddHours(3).ToString("hh:00:00");
+                string[] apiHours = forecastOWrRO.list[n].dt_txt.Split(" ");              //"2019-09-26 00:00:00"
+
+                List<float> weatherForecast = new List<float> { };
+
+                if (apiHours[1] == now)
+                {
+                    var temp1 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
+                    var tempA = float.Parse(Decimal.Round(temp1, 1).ToString());
+                    weatherForecast.Add(tempA);
+                }
+                else if (apiHours[1] == oneHour)
+                {
+                    var temp2 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
+                    var tempB = float.Parse(Decimal.Round(temp2, 1).ToString());
+                    weatherForecast.Add(tempB);
+                }
+                else if (apiHours[1] == twoHour)
+                {
+                    var temp3 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
+                    var tempC = float.Parse(Decimal.Round(temp3, 1).ToString());
+                    weatherForecast.Add(tempC);
+                }
+                else if (apiHours[1] == threeHours)
+                {
+                    var temp4 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
+                    var tempD = float.Parse(Decimal.Round(temp4, 1).ToString());
+                    weatherForecast.Add(tempD);
+                };                
+            }
+            return weatherForecast;
+
+            //return new Models.Weather
+            //{
+            //    Temperatur = 1,
+            //    Loc = location,
+            //    Supplier = new WeatherSupplier { Name = "Open Weather Forecast" },
+            //    Updated = DateTime.Now
+
+            //};
+        }
+        //----------------------------------------//
+
+
+
+
 
         public async Task<Models.Weather> OpenWeatherWeather(LoactionCoord location)
         {
@@ -50,7 +116,7 @@ namespace WeatherVote.Services
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
                 Updated = DateTime.Now
-                
+
             };
         }
 
@@ -100,7 +166,7 @@ namespace WeatherVote.Services
 
             var a = DateTime.Now;
             DateTime to = new DateTime(a.Year, a.Month, a.Day, a.Hour, 0, 0, 0);
-            DateTime from = new DateTime(a.Year, a.Month, a.Day, a.Hour+1, 0, 0, 0);
+            DateTime from = new DateTime(a.Year, a.Month, a.Day, a.Hour + 1, 0, 0, 0);
 
             yrroot = JsonConvert.DeserializeObject<Models.Rootobject>(data);
             var rootNow = yrroot.weatherdata.product.time.FirstOrDefault(x => x.from == to).location;
@@ -109,7 +175,7 @@ namespace WeatherVote.Services
             var unformatedDesc = rootToGetIcon.id;
             var imgIconUrl = float.Parse(rootToGetIcon.number);
             string pattern = $"([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))";
-            var desc = Regex.Replace(unformatedDesc, pattern , "$1 ");
+            var desc = Regex.Replace(unformatedDesc, pattern, "$1 ");
 
             var img = rootToGetIcon.number;
             var temp = rootNow.temperature.value;
@@ -149,7 +215,7 @@ namespace WeatherVote.Services
             };
         }
 
-  
+
 
         private float GetSmhiValue(string v, DateTime time, SMHI.Rootobjectsmhi smhiRootObject)
         {
@@ -251,7 +317,7 @@ namespace WeatherVote.Services
         {
             switch (imgsymbol)
             {
-               
+
                 case 1:
                 case 2:
                     if (now.Hour >= 20 || now.Hour < 6)
@@ -436,8 +502,8 @@ namespace WeatherVote.Services
 
                 case 19:
                     return @"/img/weathericons/09.png";
-                           
-                case 20:    
+
+                case 20:
                     return @"/img/weathericons/10.png";
 
                 case 21:
@@ -446,18 +512,18 @@ namespace WeatherVote.Services
                 case 22:
                     return @"/img/weathericons/47.png";
 
-                case 23:     
+                case 23:
                     return @"/img/weathericons/12.png";
 
-                case 24:     
+                case 24:
                     return @"/img/weathericons/48.png";
 
-                case 25:     
+                case 25:
                     return @"/img/weathericons/49.png";
 
-                case 26: 
+                case 26:
                     return @"/img/weathericons/13.png";
-                case 27:     
+                case 27:
 
                     return @"/img/weathericons/50.png";
 

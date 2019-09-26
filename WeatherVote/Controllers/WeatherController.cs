@@ -37,7 +37,6 @@ namespace WeatherVote.Controllers
             return View();
         }
 
-
         public IActionResult AddLikes(string wname, string loc, string typ)
         {
             if(!_context.WeatherSuppliers.Any(x => x.Name == wname)) {
@@ -49,7 +48,6 @@ namespace WeatherVote.Controllers
             {
                 var w = _context.WeatherSuppliers.First(x => x.Name == wname);
                 _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc});
-
             }
             else
             {
@@ -58,14 +56,12 @@ namespace WeatherVote.Controllers
                 vote.Likes++;
                 else
                     vote.Likes--;
-
             }
 
             _context.SaveChanges();
             var sortedWeather = SortWeathers(allWeathers.Weathers);
             allWeathers.Weathers = sortedWeather;
-            return View("Like", allWeathers);
-            
+            return View("Like", allWeathers);            
         }
 
 
@@ -84,10 +80,13 @@ namespace WeatherVote.Controllers
 
                 _context.Weathers.RemoveRange(_context.Weathers);
 
+
+            var openWeatherWeatherForecast = await _weatherService.OpenWeatherWeatherorecast(position);
+
             var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
-            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+            weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather, openWeatherWeatherForecast};
 
                 foreach (var weather in weatherList)
                 {
@@ -95,7 +94,6 @@ namespace WeatherVote.Controllers
 
                 }
                 _context.SaveChanges();
-
             }
             else
             {
@@ -158,6 +156,5 @@ namespace WeatherVote.Controllers
         {
             return View();
         }
-
     }
 }
