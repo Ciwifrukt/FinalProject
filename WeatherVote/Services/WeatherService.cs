@@ -33,7 +33,7 @@ namespace WeatherVote.Services
 
             var forecastOWrRO = JsonConvert.DeserializeObject<OpenWeatherForecast.Rootobject>(forecastOWjsonString);
             List<Forecast> weatherForecast = new List<Forecast>();
-            for (int n = 0; n < 3; n++)
+            for (int n = 0; n < forecastOWrRO.list.Length; n++)
             {
                 var now = DateTime.UtcNow.ToString("hh:00:00");
                 var oneHour = DateTime.UtcNow.AddHours(1).ToString("hh:00:00");
@@ -178,19 +178,21 @@ namespace WeatherVote.Services
 
         private List<Forecast> GetSMHIForecast(SMHI.Rootobjectsmhi smhiRootObject)
         {
-            var start = DateTime.Now.AddHours(2);
+            var start = DateTime.UtcNow.AddHours(2);
             var roundup = TimeSpan.FromMinutes(60);
             var time = int.Parse(RoundUp(start, roundup).Hour.ToString());
             int real;
             real = time > 0 ? time > 3 ? time > 6 ? time > 9 ? time > 12 ? time > 15 ? time > 18 ? time > 21 ? 0 : 21 : 18 : 15 : 12 : 9 : 6 : 3 : 0;
-            var ti = DateTime.Parse(real.ToString());
+            DateTime ti = new DateTime(DateTime.UtcNow.AddHours(2).Year, DateTime.UtcNow.AddHours(2).Month, DateTime.UtcNow.AddHours(2).Day, real, 0, 0);
+
+            //var ti = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, real, DateTime.Now.Minute, DateTime.Now.Second);
             var fore = new List<Forecast>();
             for (int i = 0; i < 3; i++)
             {
 
             var temp = GetSmhiValue("t", ti, smhiRootObject);
             var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
-                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, time=ti.ToString() });
+                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, time= ti.Hour.ToString()+":"+ti.Minute.ToString()+"0" });
                 ti = ti.AddHours(3);
             }
             
