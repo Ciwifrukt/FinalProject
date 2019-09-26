@@ -48,8 +48,12 @@ namespace WeatherVote.Controllers
             else if (!_context.Votes.Any(x => x.Supplier.Name == wname))
             {
                 var w = _context.WeatherSuppliers.First(x => x.Name == wname);
+<<<<<<< HEAD
+                _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc});
+=======
                 _context.Votes.Add(new Vote { Supplier = w, Likes = typ == "like" ? 1 : -1, Location = loc });
 
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
             }
             else
             {
@@ -63,8 +67,12 @@ namespace WeatherVote.Controllers
             _context.SaveChanges();
             var sortedWeather = SortWeathers(allWeathers.Weathers);
             allWeathers.Weathers = sortedWeather;
+<<<<<<< HEAD
+            return View("Like", allWeathers);            
+=======
             return View("Like", allWeathers);
 
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
         }
 
 
@@ -90,6 +98,7 @@ namespace WeatherVote.Controllers
 
                     _context.Weathers.RemoveRange(_context.Weathers);
 
+<<<<<<< HEAD
 
             var openWeatherWeatherForecast = await _weatherService.OpenWeatherWeatherorecast(position);
 
@@ -97,6 +106,12 @@ namespace WeatherVote.Controllers
             var smhiWeather = await _weatherService.SMHIWeather(position);
             var yrWeather = await _weatherService.YRWeather(position);
             weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather, openWeatherWeatherForecast};
+=======
+                    var openWeatherWeather = await _weatherService.OpenWeatherWeather(position);
+                    var smhiWeather = await _weatherService.SMHIWeather(position);
+                    var yrWeather = await _weatherService.YRWeather(position);
+                    weatherList = new List<Weather> { openWeatherWeather, yrWeather, smhiWeather };
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
 
                     foreach (var weather in weatherList)
                     {
@@ -106,6 +121,19 @@ namespace WeatherVote.Controllers
                     _context.SaveChanges();
 
                 }
+<<<<<<< HEAD
+                _context.SaveChanges();
+            }
+            else
+            {
+                weatherList= _context.Weathers.ToList();
+            }
+            var sortedWeather = SortWeathers(weatherList);
+            foreach (var item in sortedWeather)
+            {
+                item.Updated = DateTime.Now;
+            }
+=======
                 else
                 {
                     weatherList = _context.Weathers.ToList();
@@ -122,6 +150,7 @@ namespace WeatherVote.Controllers
                     City = position.CityName,
                     Date = DateTime.UtcNow.AddHours(2).ToString("dddd, dd MMMM HH:mm")
                 };
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
 
                 return View("Like", allWeathers);
 

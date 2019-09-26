@@ -19,3 +19,6 @@ packages
 # specific files
 
 project.lock.json
+WeatherVote/feel.txt
+WeatherVote/looog.txt
+WeatherVote/Properties/PublishProfiles/WeatherVote.pubxml

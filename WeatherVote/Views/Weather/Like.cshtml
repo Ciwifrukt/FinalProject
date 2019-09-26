@@ -2,8 +2,8 @@
 
 <div class="container" style="margin-bottom:3em">
     <!-- Time and location section  -->
-    <div class="weather text-center" style="font-size:20px; padding-top:1rem; padding-bottom:1rem;">
-        <div>@Model.City</div>
+    <div id="cityhead" class="weather text-center col-lg-8 mx-auto" style="font-size:20px; padding-top:1rem; padding-bottom:1rem;">
+        <div style="font-size:3rem">@Model.City</div>
         <div>@Model.Date</div>
     </div>
 
@@ -11,7 +11,7 @@
     @foreach (var w in Model.Weathers)
     {
         <div class="row">
-            <div id="" class="col-lg-8 mx-auto weather">
+            <div id="" class="col-lg-8 mx-auto weather hov">
                 <!-- weather header section -->
                 <div class="weather-head" onclick="showa(this)">
                     <h1 id="location" class="text-center display-4"><strong>@w.Supplier.Name</strong></h1>
@@ -35,15 +35,17 @@
                             <p class="desc" style="white-space:nowrap; font-size:x-large;">@w.Description</p>
                         </div>
                         <div id="temperature" class="col-6 text-center" style="overflow:hidden;">
+                            <p id="tempi">@w.Temperatur &#8451;</p>
+
                             <p id="icon-thermometer" class="wi wi-thermometer"></p>
-                            <p>@w.Temperatur &#8451;</p>
                         </div>
                     </div>
                     <!-- weather body header -->
                     <div class="weather-body" style="display:none">
+
                         <div class="row">
                             <div class="humidity col-4 text-center">
-                                <i class="wi wi-raindrop fa-1x"></i><span class="humi"style="white-space:nowrap;"><br/>Humidity</span>
+                                <i class="wi wi-raindrop fa-1x"></i><span class="humi" style="white-space:nowrap;"><br />Humidity</span>
                             </div>
                             <div class="wind col-4 text-center">
                                 <i class="wi wi-strong-wind fa-1x"></i><span class="humi" style="white-space:nowrap;"><br />Wind Speed</span>
@@ -62,6 +64,38 @@
                             </div>
                             <div id="visibility" class="degree-data col-4 text-center" style="white-space:nowrap">
                                 @w.Precipitation mm
+                            </div>
+                        </div>
+
+
+                        <div class="row progn" >
+                            <div class="wii col-4 text-center">
+                                09.00
+                            </div>
+                            <div class="wii col-4 text-center">
+                                12.00
+                            </div>
+                            <div class="wii col-4 text-center">
+                                15.00
+                            </div>
+                        </div>
+                        <div class="row tempii">
+                            <div class=" col-4 text-center">
+                                <img class="ico" style="padding-top:0px" src=@w.ImgIcon />
+
+                                <p>@w.Temperatur &#8451;</p>
+                            </div>
+                            <div class="col-4 text-center">
+                                <img class="ico" src=@w.ImgIcon />
+
+                                <p>@w.Temperatur &#8451;</p>
+
+                            </div>
+                            <div class=" col-4 text-center">
+                                <img class="ico" src=@w.ImgIcon />
+
+                                <p>@w.Temperatur &#8451;</p>
+
                             </div>
                         </div>
                     </div>

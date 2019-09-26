@@ -21,6 +21,7 @@ namespace WeatherVote.Models
         public LoactionCoord Loc { get; set; }
         public int Sorting { get; set; }
         public DateTime Updated { get; set; }
+        public List<Forecast> Forecasts { get; set; }
 
 
     }

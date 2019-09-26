@@ -115,8 +115,13 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
+<<<<<<< HEAD
+                Updated = DateTime.Now
+
+=======
                 Updated = DateTime.UtcNow.AddHours(2)
                 
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
             };
         }
 
