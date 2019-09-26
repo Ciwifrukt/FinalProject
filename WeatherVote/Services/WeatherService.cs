@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -73,6 +74,7 @@ namespace WeatherVote.Services
             var descr = GetDescSMHI(GetSmhiValue("Wsymb2", now, smhiRootObject));
             var imgIconUrl = GetSmhiValue("Wsymb2", now, smhiRootObject);
 
+            var forecasts = GetSMHIForecast(smhiRootObject);
             return new Weather
             {
                 Temperatur = temp,
@@ -83,9 +85,39 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = GetImgIcon(imgIconUrl, now),
                 Supplier = new WeatherSupplier { Name = "SMHI" },
-                Updated = DateTime.UtcNow.AddHours(2)
+                Updated = DateTime.UtcNow.AddHours(2),
+                Forecasts = forecasts 
 
             };
+        }
+
+        private List<Forecast> GetSMHIForecast(SMHI.Rootobjectsmhi smhiRootObject)
+        {
+            var start = DateTime.Now.AddHours(2);
+            var roundup = TimeSpan.FromMinutes(60);
+            var time = int.Parse(RoundUp(start, roundup).Hour.ToString());
+            int real;
+            real = time > 0 ? time > 3 ? time > 6 ? time > 9 ? time > 12 ? time > 15 ? time > 18 ? time > 21 ? 0 : 21 : 18 : 15 : 12 : 9 : 6 : 3 : 0;
+            var ti = DateTime.Parse(real.ToString());
+            var fore = new List<Forecast>();
+            for (int i = 0; i < 3; i++)
+            {
+
+            var temp = GetSmhiValue("t", ti, smhiRootObject);
+            var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
+                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, time=ti.ToString() });
+                ti = ti.AddHours(3);
+            }
+            
+
+            return fore;
+        }
+
+
+
+        DateTime RoundUp(DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
 
 

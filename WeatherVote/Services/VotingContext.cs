@@ -13,6 +13,7 @@ namespace WeatherVote.Services
         public DbSet<Vote> Votes { get; set; }
         public DbSet<WeatherSupplier> WeatherSuppliers { get; set; }
         public DbSet<Weather> Weathers { get; set; }
+        public DbSet<Forecast> Forecasts { get; set; }
     
 
 

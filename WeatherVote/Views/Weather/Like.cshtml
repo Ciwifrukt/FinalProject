@@ -68,36 +68,28 @@
                         </div>
 
 
-                        <div class="row progn" >
-                            <div class="wii col-4 text-center">
-                                09.00
-                            </div>
-                            <div class="wii col-4 text-center">
-                                12.00
-                            </div>
-                            <div class="wii col-4 text-center">
-                                15.00
-                            </div>
+                        <div class="row progn">
+                            @foreach (var forec in w.Forecasts)
+                            {
+
+
+                                <div class="wii col-4 text-center">
+                                    @forec.time
+                                </div>
+                           
+                            }
                         </div>
                         <div class="row tempii">
-                            <div class=" col-4 text-center">
-                                <img class="ico" style="padding-top:0px" src=@w.ImgIcon />
+                            @foreach (var forec in w.Forecasts)
+                            {
+                                <div class=" col-4 text-center">
+                                    <img class="ico" style="padding-top:0px" src=@forec.ImgIcon />
 
-                                <p>@w.Temperatur &#8451;</p>
+                                    <p>@forec.Temperatur &#8451;</p>
+                                </div>
+                            }
+                     
                             </div>
-                            <div class="col-4 text-center">
-                                <img class="ico" src=@w.ImgIcon />
-
-                                <p>@w.Temperatur &#8451;</p>
-
-                            </div>
-                            <div class=" col-4 text-center">
-                                <img class="ico" src=@w.ImgIcon />
-
-                                <p>@w.Temperatur &#8451;</p>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
