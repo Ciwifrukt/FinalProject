@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Xml;
 using WeatherVote.Models;
 using static WeatherVote.Models.OpenWeatherForecast;
-using Weather = WeatherVote.Models.Weather;
 
 namespace WeatherVote.Services
 {
@@ -23,7 +22,7 @@ namespace WeatherVote.Services
 
 
         //----------------------------------------//
-        public async Task<List<Forecast>> OpenWeatherWeatherorecast(LoactionCoord location)
+        public async Task<Models.Weather> OpenWeatherWeatherorecast(LoactionCoord location)
         {
             // var url = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
 
@@ -32,7 +31,7 @@ namespace WeatherVote.Services
             var forecastOWjsonString = await _http.Get(forecastWeatherurl);
 
             var forecastOWrRO = JsonConvert.DeserializeObject<OpenWeatherForecast.Rootobject>(forecastOWjsonString);
-            List<Forecast> weatherForecast = new List<Forecast> { };
+
             for (int n = 0; n < 3; n++)
             {
                 var now = DateTime.UtcNow.ToString("hh:00:00");
@@ -41,60 +40,43 @@ namespace WeatherVote.Services
                 var threeHours = DateTime.UtcNow.AddHours(3).ToString("hh:00:00");
                 string[] apiHours = forecastOWrRO.list[n].dt_txt.Split(" ");              //"2019-09-26 00:00:00"
 
-                
+                List<float> weatherForecast = new List<float> { };
 
                 if (apiHours[1] == now)
                 {
                     var temp1 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
                     var tempA = float.Parse(Decimal.Round(temp1, 1).ToString());
-
-                    
-                    weatherForecast.Add(new Models.Forecast
-                    {
-                        Temperatur = tempA,
-                        ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[n].icon[n]}.png",
-                    });
-
+                    weatherForecast.Add(tempA);
                 }
                 else if (apiHours[1] == oneHour)
                 {
                     var temp2 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
                     var tempB = float.Parse(Decimal.Round(temp2, 1).ToString());
-
-
-                    weatherForecast.Add(new Models.Forecast
-                    {
-                        Temperatur = tempB,
-                        ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[n].icon[n]}.png",
-                    });
-
+                    weatherForecast.Add(tempB);
                 }
                 else if (apiHours[1] == twoHour)
                 {
                     var temp3 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
                     var tempC = float.Parse(Decimal.Round(temp3, 1).ToString());
-
-                    weatherForecast.Add(new Models.Forecast
-                    {
-                        Temperatur = tempC,
-                        ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[n].icon[n]}.png",
-                    });
-
+                    weatherForecast.Add(tempC);
                 }
                 else if (apiHours[1] == threeHours)
                 {
                     var temp4 = decimal.Parse(forecastOWrRO.list[n].main.temp.ToString());
                     var tempD = float.Parse(Decimal.Round(temp4, 1).ToString());
-
-                    weatherForecast.Add(new Models.Forecast
-                    {
-                        Temperatur = tempD,
-                        ImgIcon = $"/img/weathericons/{forecastOWrRO.list[n].weather[n].icon[n]}.png",
-                    });
-                };
+                    weatherForecast.Add(tempD);
+                };                
             }
-
             return weatherForecast;
+
+            //return new Models.Weather
+            //{
+            //    Temperatur = 1,
+            //    Loc = location,
+            //    Supplier = new WeatherSupplier { Name = "Open Weather Forecast" },
+            //    Updated = DateTime.Now
+
+            //};
         }
         //----------------------------------------//
 
@@ -133,8 +115,13 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = $"/img/weathericons/{currentOWrRO.weather[0].icon}.png",
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
+<<<<<<< HEAD
+                Updated = DateTime.Now
+
+=======
                 Updated = DateTime.UtcNow.AddHours(2)
                 
+>>>>>>> 9d71104206df34f58e68288079c7e0def544d580
             };
         }
 
@@ -157,7 +144,6 @@ namespace WeatherVote.Services
             var descr = GetDescSMHI(GetSmhiValue("Wsymb2", now, smhiRootObject));
             var imgIconUrl = GetSmhiValue("Wsymb2", now, smhiRootObject);
 
-            var forecasts = GetSMHIForecast(smhiRootObject);
             return new Weather
             {
                 Temperatur = temp,
@@ -168,39 +154,9 @@ namespace WeatherVote.Services
                 Wind = wind,
                 ImgIcon = GetImgIcon(imgIconUrl, now),
                 Supplier = new WeatherSupplier { Name = "SMHI" },
-                Updated = DateTime.UtcNow.AddHours(2),
-                Forecasts = forecasts 
+                Updated = DateTime.UtcNow.AddHours(2)
 
             };
-        }
-
-        private List<Forecast> GetSMHIForecast(SMHI.Rootobjectsmhi smhiRootObject)
-        {
-            var start = DateTime.Now.AddHours(2);
-            var roundup = TimeSpan.FromMinutes(60);
-            var time = int.Parse(RoundUp(start, roundup).Hour.ToString());
-            int real;
-            real = time > 0 ? time > 3 ? time > 6 ? time > 9 ? time > 12 ? time > 15 ? time > 18 ? time > 21 ? 0 : 21 : 18 : 15 : 12 : 9 : 6 : 3 : 0;
-            var ti = DateTime.Parse(real.ToString());
-            var fore = new List<Forecast>();
-            for (int i = 0; i < 3; i++)
-            {
-
-            var temp = GetSmhiValue("t", ti, smhiRootObject);
-            var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
-                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, time=ti.ToString() });
-                ti = ti.AddHours(3);
-            }
-            
-
-            return fore;
-        }
-
-
-
-        DateTime RoundUp(DateTime dt, TimeSpan d)
-        {
-            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks, dt.Kind);
         }
 
 
@@ -208,7 +164,7 @@ namespace WeatherVote.Services
         {
             XmlDocument doc = new XmlDocument();
 
-            var yrroot = new Models.Rootobject();
+            var yrroot = new Rootobject();
 
             var url = $"https://api.met.no/weatherapi/locationforecast/1.9/?lat={location.Latitude}&lon={location.Longitude}";
             var weatherInfo = await _http.Get(url);

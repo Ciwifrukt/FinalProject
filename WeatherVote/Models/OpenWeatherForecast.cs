@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WeatherVote.Models
 {
-    public class OpenWeather
+    public class OpenWeatherForecast
     {
-
         public class Rootobject
         {
             public string cod { get; set; }
@@ -24,6 +23,10 @@ namespace WeatherVote.Models
             public string name { get; set; }
             public Coord coord { get; set; }
             public string country { get; set; }
+            public int population { get; set; }
+            public int timezone { get; set; }
+            public int sunrise { get; set; }
+            public int sunset { get; set; }
         }
 
         public class Coord
@@ -74,7 +77,7 @@ namespace WeatherVote.Models
 
         public class Rain
         {
-            public float _1h { get; set; }
+            public float _3h { get; set; }
         }
 
         public class Weather
