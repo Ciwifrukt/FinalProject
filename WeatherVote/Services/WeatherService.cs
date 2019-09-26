@@ -192,7 +192,7 @@ namespace WeatherVote.Services
 
             var temp = GetSmhiValue("t", ti, smhiRootObject);
             var img = GetSmhiValue("Wsymb2", ti, smhiRootObject);
-                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, Time= ti.Hour.ToString()+":"+ti.Minute.ToString()+"0" });
+                fore.Add(new Forecast { ImgIcon = GetImgIcon(img,ti), Temperatur = temp, Time= ti.Hour.ToString() });
                 ti = ti.AddHours(3);
             }
             

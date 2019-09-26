@@ -89,7 +89,7 @@ namespace WeatherVote.Controllers
                 {
                 _context.Forecasts.RemoveRange(_context.Forecasts);
                     _context.Weathers.RemoveRange(_context.Weathers);
-                
+
 
 
 
