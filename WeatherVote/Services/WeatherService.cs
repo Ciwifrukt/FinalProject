@@ -233,7 +233,8 @@ namespace WeatherVote.Services
                 forecast.Add(item);
             }
 
-            var nått = forecast.Where(x => int.Parse(x.Time) > a.Hour);
+            var nått = forecast.Where(x => int.Parse(x.Time) > a.Hour).ToList();
+            nått.RemoveRange(3, nått.Count-3);
 
 
 
