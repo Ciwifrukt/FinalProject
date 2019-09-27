@@ -22,7 +22,7 @@ namespace WeatherVote.Services
         }
 
 
-        //----------------------------------------//
+
         public async Task<List<Forecast>> OpenWeatherWeatherorecast(LoactionCoord location)
         {
             // var url = $"http://api.openweathermap.org/data/2.5/weather?lat={location.Latitude}&lon={location.Longitude}&appid={apiKey}&units=metric ";
@@ -82,7 +82,7 @@ namespace WeatherVote.Services
             {
                 Temperatur = temp,
                 Loc = location,
-                Description = descr,
+                Description = descr.First().ToString().ToUpper() + descr.Substring(1),
                 Humidity = hum,
                 Precipitation = (float)prec,
                 Wind = wind,
@@ -90,7 +90,6 @@ namespace WeatherVote.Services
                 Supplier = new WeatherSupplier { Name = "Open Weather" },
                 Updated = DateTime.UtcNow.AddHours(2),
                 Forecasts = forec
-
             };
         }
 
